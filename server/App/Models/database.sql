@@ -15,6 +15,7 @@ CREATE TABLE Location (
     zip varchar(10),
     state varchar(100)
 );
+postgres://ejuhkgfxdbccqd:902664f1c7e6c2254766da1e8193f892889dfed4d8033197613f7f36a76a4e2a@ec2-44-206-197-71.compute-1.amazonaws.com:5432/d7au8bhh8ggg5o
 
 DROP TABLE IF EXISTS Department CASCADE;
 CREATE TABLE Department (
