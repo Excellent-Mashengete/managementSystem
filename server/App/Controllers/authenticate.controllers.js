@@ -1,8 +1,8 @@
 const client = require("../Config/db.config");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
-
-const SECRET_KEY = "tsrydtufygikhlikjuyehsgfh"
+const randomize = require("rand-token")
+const SECRET_KEY = randomize.generate(20)
 //Register a new user in the database 
  exports.register = async (req, res) => {
     const { fname,lname, email, password } = req.body;
