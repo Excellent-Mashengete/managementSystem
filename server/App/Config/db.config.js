@@ -8,7 +8,6 @@ const data = "postgres://ujbzvpmbhcdows:57c40dda6a9d024934a31b06b6d520ad591b3156
 //     PORT:'5432',
 //     DIALECT:'postgres'
 // }
-
 const client = new Client({
     connectionString: data,
     ssl:{

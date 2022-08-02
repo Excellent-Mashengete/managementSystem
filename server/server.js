@@ -8,10 +8,6 @@ var corsOptions = {
   credentials: true
 };// only allow that listerning address to connnect to the database
 
-
-const client = require ('./App/Models/export.model');
-client.authenticate().then(()=> console.log("Database Connected")).catch(err => console.log('error ' + err))
- 
 app.use(express.json());  // to support JSON-encoded
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
@@ -21,13 +17,27 @@ app.use(
         extended: true
     })
 );
+//call our backend connections file
+const client = require('./App/Config/db.config')
+client.connect((err) =>{ // Connect to the Database
+    if (err) {
+       console.log(err) //Return an error if unable to connnect to the database
+      }
+   else {
+     console.log("Databased Connected"); //Database connection Successfuly
+    }
+});
+
+//call our routes
+const auth = require("./App/Routes/authenticate")
 
 const port = process.env.PORT || 7070;
 
-
- app.get("/", (req, res) =>{
+app.get("/", (req, res) =>{
     res.status(200).send("Welcome to Excellent server");
 });
+
+app.use("/api", auth) //retrive authentication infor 
 
 app.listen(port, () =>{  
     console.log(`Server is running on port ${port}. http://localhost:${port}`) 

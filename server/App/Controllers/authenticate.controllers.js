@@ -1,22 +1,71 @@
-const client = require("../config/database.config");
+const client = require("../Config/db.config");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 
+const SECRET_KEY = "tsrydtufygikhlikjuyehsgfh"
+//Register a new user in the database 
+ exports.register = async (req, res) => {
+    const { fname,lname, email, password } = req.body;
+    try { 
+        const data = await client.query(`SELECT * FROM Administrator WHERE email= $1;` , [email]);
+        const arr = data.rows;
+        if(arr.length != 0){
+            res.status(400).json({
+                message: "user already exist"
+            })
+        }else { 
+            bcrypt.hash(password, 10, (err, hash) => {
+                if(err) 
+                    res.status(err).json({
+                        error: "Sever Error",
+                    });
+                const user = {
+                    fname, 
+                    lname,
+                    email,
+                    password: hash,
+                };
+                var flag = 1;
 
-/**
- * verifies existing customer user against DB credentials
- * @param {Object} req { body.email, body.password , body.userType}
- * @param {*} res 
- */
+                client.query(`INSERT INTO Administrator (fname, lname, email,  password) VALUES ($1,$2,$3, $4);`, 
+                [user.fname,user.lname, user.email, user.password], (err) => {
+                    if (err) {
+                        flag  =  0;                          //If user is not inserted is not inserted to database assigning flag as 0/false.
+                        return  res.status(500).json({
+                            error: "Database error"
+                        })
+                    }else {
+                        flag  =  1;
+                        res.status(200).send({ message: 'User added to database, not verified' });
+                    }
+                })
+                if (flag) {
+                    const  token  = jwt.sign({
+                        email: user.email
+                    },
+                        SECRET_KEY
+                    );
+                };
+            });
+        }
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({
+            error: "Database error while registering user!",
+        });
+    }
+} 
 
+//Create a login 
 module.exports.login = async (req, res) => {
     const {email,password} = req.body;
     try{
         if(!(email && password)){
             res.status(400).json({message:"user input required"});
         }
-        
-        const logData = await client.query(`SELECT * FROM users WHERE email= $1;`,
+
+        const logData = await client.query(`SELECT * FROM Administrator WHERE email= $1;`,
         [email]); //Check if user exist
         arrData = logData.rows;
 
@@ -35,9 +84,10 @@ module.exports.login = async (req, res) => {
                     const token = jwt.sign({
                             email: email, 
                             id:arrData[0].id, 
-                            name:arrData[0].name
+                            fname:arrData[0].fname,
+                            lname:arrData[0].lname
                         },
-                            process.env.SECRET_KEY,
+                            SECRET_KEY,
                         { expiresIn: '1h' }
                     );
                     
@@ -45,7 +95,6 @@ module.exports.login = async (req, res) => {
                         message: "User successfully signed in",
                         expiresIn: 3600,
                         token:token,
-                        //_id: arrData.id,
                     });
                 } else {
                     //define errors
@@ -66,54 +115,20 @@ module.exports.login = async (req, res) => {
     }
 }
 
-exports.register = async (req, res) => {
-    const { name, email, password } = req.body;
-    try { 
-        const data = await client.query(`SELECT * FROM users WHERE email= $1;` , [email]);
-        const arr = data.rows;
-        if(arr.length != 0){
-            res.status(400).json({
-                message: "user already exist"
-            })
-        }else { 
-            bcrypt.hash(password, 10, (err, hash) => {
-                if(err) 
-                    res.status(err).json({
-                        error: "Sever Error",
-                    });
-                const user = {
-                    name, 
-                    email,
-                    password: hash,
-                };
-                var flag = 1;
-
-                client.query(`INSERT INTO users (name , email,  password) VALUES ($1,$2,$3);`, 
-                [user.name, user.email, user.password], (err) => {
-                    if (err) {
-                        flag  =  0;                          //If user is not inserted is not inserted to database assigning flag as 0/false.
-                        return  res.status(500).json({
-                            error: "Database error"
-                        })
-                    }else {
-                        flag  =  1;
-                        res.status(200).send({ message: 'User added to database, not verified' });
-                    }
-                })
-                if (flag) {
-                    const  token  = jwt.sign({
-                        email: user.email
-                    },
-                        process.env.SECRET_KEY
-                    );
-                };
-            });
-        }
+//Create function to get all userprofiles
+module.exports.userProfile = async (req, res, next) => {
+    try{  
+        await client.query(`SELECT * FROM Administrator`, (error, results) => {
+                if(error){ 
+                    return next(error)
+                }
+                res.status(200).json(results.rows) //Return a status 200 if there is no error
+            }
+        )
     }
     catch (err) {
-        console.log(err);
         res.status(500).json({
-            error: "Database error while registering user!",
+           error: "Database error while retrieving products", 
         });
-    }
-} 
+    };
+}

@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/Auth/login/login.component';
 import { RegisterComponent } from './components/Auth/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
@@ -43,7 +42,6 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
-    HeaderComponent,
     FooterComponent,
     DashboardComponent,
   ],

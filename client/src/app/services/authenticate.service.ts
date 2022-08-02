@@ -29,8 +29,7 @@ export class AuthenticateService {
   getToken() {
     return localStorage.getItem('access_token');
   }
-//  https://www.themoviedb.org/movie
-
+  
   get isLoggedIn(): boolean {
     let authToken = localStorage.getItem('access_token');
     return authToken !== null ? true : false;

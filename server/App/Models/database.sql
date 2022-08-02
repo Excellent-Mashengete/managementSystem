@@ -1,46 +1,51 @@
-DROP TABLE IF EXISTS users CASCADE;
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    fName VARCHAR(100) NOT NULL,
-    lName VARCHAR(100) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255),
+DROP TABLE IF EXISTS Administrator CASCADE;
+CREATE TABLE Administrator (
+    id SERIAL PRiMARY KEY NOT NULL,
+    fname VARCHAR(50) NOT NULL,
+    lname VARCHAR(50) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    password VARCHAR(255) NOT NULL 
 );
 
-DROP TABLE IF EXISTS products CASCADE;
-CREATE TABLE products(
-    prod_id SERIAL PRIMARY KEY,
-    prod_name VARCHAR(225),
-    prod_desc text,
-    prod_price decimal(8,2),
-    unit int,
-    size int,
-    image text,
-    brand VARCHAR(100)
+DROP TABLE IF EXISTS Employees CASCADE;
+CREATE TABLE Employees (
+    emp_id SERIAL PRiMARY KEY NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    phone_number VARCHAR(150),
+    hiredate TIMESTAMP NOT NULL DEFAULT NOW(),
+    job_id int NOT NULL,
+    salary decimal(8,2)
 );
-
-DROP TABLE IF EXISTS orders CASCADE;
-CREATE TABLE orders(
-    orderid SERIAL PRIMARY KEY,
-    user_id integer,
+DROP TABLE IF EXISTS Location CASCADE;
+CREATE TABLE Location (
+    location_id SERIAL PRiMARY KEY NOT NULL,
     address varchar(100),
     city varchar(100),
     town varchar(100),
     zip varchar(10),
-    delivery_price decimal(8,2),
-    totalCost decimal(8,2),
-    orderdate TIMESTAMP NOT NULL DEFAULT NOW(),
-    FOREIGN KEY(user_id) REFERENCES users(id)
+    state varchar(100)
 );
 
-DROP TABLE IF EXISTS orderItems CASCADE;
-CREATE TABLE orderItems(
-    o_Item SERIAL PRIMARY KEY,
-    orderid integer,
-    product_id integer,
-    actualprice decimal(8,2),
-    quantity integer,
-    FOREIGN KEY(orderid) REFERENCES orders(orderid),
-    FOREIGN KEY(product_id) REFERENCES products(prod_id)
+DROP TABLE IF EXISTS Department CASCADE;
+CREATE TABLE Department (
+    dept_id SERIAL PRiMARY KEY NOT NULL,
+    dept_name VARCHAR(50) NOT NULL,
+    location_id int,
+    emp_id int,
+    FOREIGN KEY(emp_id) REFERENCES Employees(emp_id),
+    FOREIGN KEY(location_id) REFERENCES Location(location_id)
 );
+
+DROP TABLE IF EXISTS Job_History CASCADE;
+CREATE TABLE Job_History (
+    emp_id SERIAL PRiMARY KEY NOT NULL,
+    start_date Date NOT NULL,
+    end_date Date NOT NULL,
+    name Date NOT NULL,
+    location Date NOT NULL,
+    FOREIGN KEY(emp_id) REFERENCES Employees(emp_id)
+);
+
 
