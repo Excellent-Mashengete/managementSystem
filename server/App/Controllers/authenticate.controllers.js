@@ -1,10 +1,10 @@
 const client = require("../Config/db.config");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
-
-const SECRET_KEY = "tsrydtufygikhlikjuyehsgfh"
+const randomize = require("rand-token")
+const SECRET_KEY = randomize.generate(20) //generate random token of up to 20 digits 
 //Register a new user in the database 
- exports.register = async (req, res) => {
+const register = async (req, res) => {
     const { fname,lname, email, password } = req.body;
     try { 
         const data = await client.query(`SELECT * FROM Administrator WHERE email= $1;` , [email]);
@@ -36,15 +36,17 @@ const SECRET_KEY = "tsrydtufygikhlikjuyehsgfh"
                         })
                     }else {
                         flag  =  1;
-                        res.status(200).send({ message: 'User added to database, not verified' });
                     }
                 })
                 if (flag) {
                     const  token  = jwt.sign({
-                        email: user.email
+                        email: user.email,
+                        fname:user.fname,
+                        lname:user.lname
                     },
                         SECRET_KEY
                     );
+                    res.status(200).send({ message: 'User added to database, not verified' ,token:token});
                 };
             });
         }
@@ -58,7 +60,7 @@ const SECRET_KEY = "tsrydtufygikhlikjuyehsgfh"
 } 
 
 //Create a login 
-module.exports.login = async (req, res) => {
+const login = async (req, res) => {
     const {email,password} = req.body;
     try{
         if(!(email && password)){
@@ -116,19 +118,25 @@ module.exports.login = async (req, res) => {
 }
 
 //Create function to get all userprofiles
-module.exports.userProfile = async (req, res, next) => {
+const userProfile = async (req, res, next) => {
     try{  
         await client.query(`SELECT * FROM Administrator`, (error, results) => {
-                if(error){ 
-                    return next(error)
-                }
-                res.status(200).json(results.rows) //Return a status 200 if there is no error
+            if(error){ 
+                return next(error)
             }
-        )
+            res.status(200).json(results.rows) //Return a status 200 if there is no error
+        })
     }
     catch (err) {
         res.status(500).json({
            error: "Database error while retrieving products", 
         });
     };
+}
+
+module.exports ={
+    register,
+    login,
+    userProfile,
+    SECRET_KEY
 }

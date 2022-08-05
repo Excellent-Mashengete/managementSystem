@@ -1,5 +1,5 @@
 const {Client} = require("pg");
-const data = "postgres://ujbzvpmbhcdows:57c40dda6a9d024934a31b06b6d520ad591b3156105142f9c79c586160629e83@ec2-44-206-197-71.compute-1.amazonaws.com:5432/dbcgj064muqpcp"
+const data = "postgres://yycfmlgwvzmcvw:dad24ed1b7b32fb371c87b147e5dba4c57964d8ad85b93b62973ac7a5912ab50@ec2-3-223-169-166.compute-1.amazonaws.com:5432/damk6km0vhb4i2"
 // const local ={
 //     HOST:'localhost',
 //     USER:'admin',

@@ -31,6 +31,7 @@ client.connect((err) =>{ // Connect to the Database
 
 //call our routes
 const auth = require("./App/Routes/authenticate")
+const emp = require("./App/Routes/employee")
 
 const port = process.env.PORT || 7070;
 
@@ -39,7 +40,7 @@ app.get("/", (req, res) =>{
 });
 
 app.use("/api", auth) //retrive authentication infor 
-
+app.use("/api", emp) //retrive employees information 
 app.listen(port, () =>{  
     console.log(`Server is running on port ${port}. http://localhost:${port}`) 
  })

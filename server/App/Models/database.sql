@@ -7,17 +7,6 @@ CREATE TABLE Administrator (
     password VARCHAR(255) NOT NULL 
 );
 
-DROP TABLE IF EXISTS Employees CASCADE;
-CREATE TABLE Employees (
-    emp_id SERIAL PRiMARY KEY NOT NULL,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(150) NOT NULL,
-    phone_number VARCHAR(150),
-    hiredate TIMESTAMP NOT NULL DEFAULT NOW(),
-    job_id int NOT NULL,
-    salary decimal(8,2)
-);
 DROP TABLE IF EXISTS Location CASCADE;
 CREATE TABLE Location (
     location_id SERIAL PRiMARY KEY NOT NULL,
@@ -33,19 +22,27 @@ CREATE TABLE Department (
     dept_id SERIAL PRiMARY KEY NOT NULL,
     dept_name VARCHAR(50) NOT NULL,
     location_id int,
-    emp_id int,
-    FOREIGN KEY(emp_id) REFERENCES Employees(emp_id),
     FOREIGN KEY(location_id) REFERENCES Location(location_id)
+);
+
+DROP TABLE IF EXISTS Employees CASCADE;
+CREATE TABLE Employees (
+    emp_id SERIAL PRiMARY KEY NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    phone_number VARCHAR(150),
+    hiredate TIMESTAMP NOT NULL DEFAULT NOW(),
+    salary decimal(8,2),
+    dept_id int,
+    FOREIGN KEY(dept_id) REFERENCES Department(dept_id)
 );
 
 DROP TABLE IF EXISTS Job_History CASCADE;
 CREATE TABLE Job_History (
     emp_id SERIAL PRiMARY KEY NOT NULL,
+    company_name VARCHAR(50) NOT NULL,
     start_date Date NOT NULL,
     end_date Date NOT NULL,
-    name Date NOT NULL,
-    location Date NOT NULL,
     FOREIGN KEY(emp_id) REFERENCES Employees(emp_id)
 );
-
-
