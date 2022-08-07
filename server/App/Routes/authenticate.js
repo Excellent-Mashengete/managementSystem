@@ -7,4 +7,5 @@ const middleware = require("../Middlewares/userauthentication");
 router.post('/register',auth.register);
 router.post('/login',auth.login);
 router.get('/profile',middleware, auth.userProfile);
+
 module.exports = router;

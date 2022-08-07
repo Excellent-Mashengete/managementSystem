@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 const randomize = require("rand-token")
 const SECRET_KEY = randomize.generate(20) //generate random token of up to 20 digits 
+
 //Register a new user in the database 
 const register = async (req, res) => {
     const { fname,lname, email, password } = req.body;
@@ -10,14 +11,14 @@ const register = async (req, res) => {
         const data = await client.query(`SELECT * FROM Administrator WHERE email= $1;` , [email]);
         const arr = data.rows;
         if(arr.length != 0){
-            res.status(400).json({
+            return res.status(400).json({
                 message: "user already exist"
             })
         }else { 
             bcrypt.hash(password, 10, (err, hash) => {
                 if(err) 
-                    res.status(err).json({
-                        error: "Sever Error",
+                    return res.status(err).json({
+                        message: "Sever Error",
                     });
                 const user = {
                     fname, 
@@ -32,7 +33,7 @@ const register = async (req, res) => {
                     if (err) {
                         flag  =  0;                          //If user is not inserted is not inserted to database assigning flag as 0/false.
                         return  res.status(500).json({
-                            error: "Database error"
+                            message: "Database error"
                         })
                     }else {
                         flag  =  1;
@@ -41,20 +42,19 @@ const register = async (req, res) => {
                 if (flag) {
                     const  token  = jwt.sign({
                         email: user.email,
-                        fname:user.fname,
-                        lname:user.lname
+                        fname: user.fname,
+                        lname: user.lname
                     },
                         SECRET_KEY
                     );
-                    res.status(200).send({ message: 'User added to database, not verified' ,token:token});
+                    return res.status(200).send({ message: 'User added to database, not verified' ,token:token});
                 };
             });
         }
     }
     catch (err) {
-        console.log(err);
-        res.status(500).json({
-            error: "Database error while registering user!",
+        return res.status(500).json({
+            message: "Database error while registering user!",
         });
     }
 } 
@@ -64,7 +64,7 @@ const login = async (req, res) => {
     const {email,password} = req.body;
     try{
         if(!(email && password)){
-            res.status(400).json({message:"user input required"});
+            return res.status(400).json({message:"user input required"});
         }
 
         const logData = await client.query(`SELECT * FROM Administrator WHERE email= $1;`,
@@ -72,14 +72,14 @@ const login = async (req, res) => {
         arrData = logData.rows;
 
         if (arrData.length == 0) {
-            res.status(400).json({
+            return res.status(400).json({
                 message: "user doesn't exist"
             })
         }else{
             bcrypt.compare(password, arrData[0].password, (err, results) => {
                 if (err) {
-                    res.status(500).json({
-                        error: "Server error"
+                    return res.status(500).json({
+                        message: "Server error"
                     })
                 } else 
                     if (results === true) {
@@ -93,16 +93,15 @@ const login = async (req, res) => {
                         { expiresIn: '1h' }
                     );
                     
-                    res.status(200).json({
+                    return res.status(200).json({
                         message: "User successfully signed in",
-                        expiresIn: 3600,
                         token:token,
                     });
                 } else {
                     //define errors
                     if (results != true) {
-                        res.status(400).json({
-                            error: "incorrect password"
+                        return res.status(400).json({
+                            message: "incorrect password"
                         })
                     }
                 }
@@ -110,7 +109,6 @@ const login = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error)
         res.status(500).json({
             error: "Database error while logging in!"
         })

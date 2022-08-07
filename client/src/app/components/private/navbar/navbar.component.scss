@@ -1,0 +1,53 @@
+
+.fa-solid{
+    color: #D27C2C;
+}
+
+li a:hover{
+    text-decoration: none;
+}
+
+.total{
+    position: absolute;
+    left: 25px;
+    top: 8px;
+    color: #ffffff;
+    border: none;
+    font-size: 1em;
+}
+.container-fluid{
+    background-color: whitesmoke;
+}
+.container-fluid .navbar{
+    height: 1vh;
+}
+
+img{
+    border-radius: 50%;
+}
+.fill-current{
+    position: absolute;
+    left: 40px; 
+    top:20px;
+}
+.dopdown{
+    right: 2%;
+}
+.dopdown li{
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dopdown li a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  .dopdown a:hover {
+    background-color: #ddd;
+    text-decoration: underline;
+  }
