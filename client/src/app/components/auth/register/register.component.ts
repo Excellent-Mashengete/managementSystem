@@ -57,8 +57,7 @@ export class RegisterComponent implements OnInit {
       email: this.Form.value.email,
       password: this.Form.value.password
     }
-    
-    this.router.navigate(['/'])
+    this.auth.register(user)
   }
 
 }

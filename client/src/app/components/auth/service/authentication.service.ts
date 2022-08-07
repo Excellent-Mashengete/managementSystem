@@ -33,7 +33,14 @@ export class AuthenticationService {
 
   //create a login request using 
   register(users : Register) {
-    return this.http.post(`${this.baseUrl}register`, users);
+    return this.http.post(`${this.baseUrl}register`, users).subscribe({
+      next:data =>{
+        this.userToken = data
+        localStorage.setItem('access_token', this.userToken.token)
+        this.router.navigate(['/'])
+        this.getUserProfile(this.userToken.token)
+      } 
+    });
   }
   
   //get a token 
