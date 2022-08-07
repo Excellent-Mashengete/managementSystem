@@ -3,11 +3,12 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
 import { MustMatch } from './utils/validation';
-
+import {MessageService} from 'primeng/api';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
+  providers: [MessageService]
 })
 export class RegisterComponent implements OnInit {
   Form = new FormGroup({
@@ -24,7 +25,8 @@ export class RegisterComponent implements OnInit {
  
   constructor(private formBuilder: FormBuilder, 
     public auth:AuthenticationService, 
-    private router:Router) { }
+    private router:Router,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.Form = this.formBuilder.group({
@@ -45,19 +47,22 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit():void{
-    this.submitted = true;// submit when the details are true/when form is not blank
 
-    if(this.Form.invalid)
-    { 
-      return
-    }
-    let user = {
-      fname: this.Form.value.fname,
-      lname: this.Form.value.lname,
-      email: this.Form.value.email,
-      password: this.Form.value.password
-    }
-    this.auth.register(user)
+      this.submitted = true;// submit when the details are true/when form is not blank
+
+      if(this.Form.invalid)
+      { 
+        return
+      }
+      let user = {
+        fname: this.Form.value.fname,
+        lname: this.Form.value.lname,
+        email: this.Form.value.email,
+        password: this.Form.value.password
+      }
+      this.auth.register(user)
+  
+    
   }
 
 }

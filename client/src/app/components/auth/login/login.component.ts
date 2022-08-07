@@ -44,5 +44,7 @@ export class LoginComponent implements OnInit {
       password: this.Form.value.password
     }
     this.auth.login(user)
+    
+    console.log(this.auth.message)
   }
 }

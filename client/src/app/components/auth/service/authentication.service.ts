@@ -19,25 +19,39 @@ export class AuthenticationService {
   username: string = '';
   name: any;
   email: any;
+  submitted = false; //bpplean
+  message: any
+
   //create a login request using 
   login(users : Login) {
     return this.http.post(`${this.baseUrl}login`, users).subscribe({
       next:data =>{
         this.userToken = data
         localStorage.setItem('access_token', this.userToken.token)
+        //route to dashboard if login was successful
         this.router.navigate(['/'])
+
+        //call user the getprofile function pass the token as an argument
         this.getUserProfile(this.userToken.token)
-      } 
+      },
+      error: err => {
+        this.submitted = true;
+        this.message = err.error.message
+    }
     })
   }
 
-  //create a login request using 
+  //create a register request 
   register(users : Register) {
     return this.http.post(`${this.baseUrl}register`, users).subscribe({
       next:data =>{
         this.userToken = data
         localStorage.setItem('access_token', this.userToken.token)
+
+        //route to dashboard if login was successful
         this.router.navigate(['/'])
+        
+        //call user the getprofile function pass the token as an argument
         this.getUserProfile(this.userToken.token)
       } 
     });
