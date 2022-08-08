@@ -3,7 +3,10 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
 import { MustMatch } from './utils/validation';
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
+import { NgxLoadingComponent } from 'ngx-loading';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -21,7 +24,7 @@ export class RegisterComponent implements OnInit {
 
   currentUser = {};
   userToken: any = {}
-  submitted = false; //bpplean
+  submitted = false; 
  
   constructor(private formBuilder: FormBuilder, 
     public auth:AuthenticationService, 
@@ -35,7 +38,7 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]],
       confirmpassword: ['', Validators.required],
-    },{
+    },{//Compares the two passwprds if they match
       validator:MustMatch("password","confirmpassword"),
     }
 
@@ -47,22 +50,34 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit():void{
+    this.submitted = true;// submit when the details are true/when form is not blank
 
-      this.submitted = true;// submit when the details are true/when form is not blank
+    if(this.Form.invalid)
+    { 
+      return
+    }
+    let user = {//assign all entered values in the form to a variable user
+      fname: this.Form.value.fname,
+      lname: this.Form.value.lname,
+      email: this.Form.value.email,
+      password: this.Form.value.password
+    }
 
-      if(this.Form.invalid)
-      { 
-        return
+    this.auth.register(user).subscribe({
+      next:data =>{
+        this.userToken = data
+        localStorage.setItem('access_token', this.userToken.token)
+        //route to dashboard if login was successful
+        this.router.navigate(['/dash'])
+
+        //call user the getprofile function pass the token as an argument
+        this.auth.getUserProfile(this.userToken.token)
+      },
+      error: err => {
+        this.messageService.add({
+          key: 'tc', severity:'error', summary: 'Error', detail: err.error.message, life: 3000
+        });  
       }
-      let user = {
-        fname: this.Form.value.fname,
-        lname: this.Form.value.lname,
-        email: this.Form.value.email,
-        password: this.Form.value.password
-      }
-      this.auth.register(user)
-  
-    
+    })
   }
-
 }

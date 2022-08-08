@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Login } from 'src/app/interfaces/login';
 import { Register } from 'src/app/interfaces/register';
 import { environment } from 'src/environments/environment';
@@ -15,51 +15,18 @@ export class AuthenticationService {
   constructor(private http: HttpClient,private router: Router) { }
   
   currentUser: any  = {};
-  userToken: any = {};
-  username: string = '';
-  name: any;
-  email: any;
-  submitted = false; //bpplean
-  message: any
+  name : string = '';
+  email : string = '';
+
 
   //create a login request using 
   login(users : Login) {
-    return this.http.post(`${this.baseUrl}login`, users).subscribe({
-      next:data =>{
-        this.userToken = data
-        localStorage.setItem('access_token', this.userToken.token)
-        //route to dashboard if login was successful
-        this.router.navigate(['/'])
-
-        //call user the getprofile function pass the token as an argument
-        this.getUserProfile(this.userToken.token)
-      },
-      error: err => {
-        this.submitted = true;
-        this.message = err.error.message
-    }
-    })
+    return this.http.post(`${this.baseUrl}login`, users)
   }
 
   //create a register request 
   register(users : Register) {
-    return this.http.post(`${this.baseUrl}register`, users).subscribe({
-      next:data =>{
-        this.userToken = data
-        localStorage.setItem('access_token', this.userToken.token)
-
-        //route to dashboard if login was successful
-        this.router.navigate(['/'])
-        
-        //call user the getprofile function pass the token as an argument
-        this.getUserProfile(this.userToken.token)
-      } 
-    });
-  }
-  
-  //get a token 
-  getToken() {
-    return localStorage.getItem('access_token');
+    return this.http.post(`${this.baseUrl}register`, users)
   }
   
   //create a login request 
@@ -85,9 +52,9 @@ export class AuthenticationService {
 
     return this.http.get(`${this.baseUrl}profile`,httpOptions).subscribe({
       next:userinfor => {
-        this.currentUser = userinfor
-        this.name = this.transform(this.currentUser.decoded.fname) +" "+ this.transform(this.currentUser.decoded.lname)
-        this.email = this.currentUser.decoded.email
+        this.currentUser = userinfor;
+        this.name = this.transform(this.currentUser.decoded.fname) +" "+ this.transform(this.currentUser.decoded.lname);
+        this.email = this.currentUser.decoded.email;
       }
     })
   }

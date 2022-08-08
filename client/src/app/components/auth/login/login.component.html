@@ -1,8 +1,8 @@
-
+<p-toast position="top-right" key="tc"></p-toast>
 <section class="gradient-custom">
-    <div class="md:container  justify-center">
-        <div class="flex items-center">
-            <div class="md:card w-96 bg-base-100 shadow-xl">
+    <div class="md:container md:mx-auto">
+        <div class="flex justify-center">
+            <div class="md:card w-96 shadow-xl ">
                 <div class="card-body">
                     <div class="text-center">
 
@@ -16,7 +16,7 @@
                         <div class="form-group col mb-4">
                             <label class="label"><span class="label-text">Email address</span></label>
                             <input type="email" formControlName="email" placeholder="Email"
-                                class="input input-bordered w-full max-w-xs email "
+                                class="input input-bordered w-full max-w-s email "
                                 [ngClass] ="{ 'is-invalid':submitted && f['email'].errors }" />
                             <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
                                 <div *ngIf="f['email'].errors['required']">Email is required</div>
@@ -27,7 +27,7 @@
                         <div class="form-group col mb-4">
                             <label class="label"><span class="label-text">Password</span></label>
                             <input type="password" formControlName="password" placeholder="Password"
-                                class="input input-bordered w-full max-w-xs password"
+                                class="input input-bordered w-full max-w-s password"
                                 [ngClass]="{ 'is-invalid':submitted && f['password'].errors }" />
                             <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
                                 <div *ngIf="f['password'].errors['required']">Password is required</div>

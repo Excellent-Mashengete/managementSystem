@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 const randomize = require("rand-token")
 const SECRET_KEY = randomize.generate(20) //generate random token of up to 20 digits 
+const nodemailer = require('nodemailer')//Send emails
 
 //Register a new user in the database 
 const register = async (req, res) => {
@@ -63,6 +64,13 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     const {email,password} = req.body;
     try{
+        const data = await client.query(`SELECT * FROM Administrator WHERE email= $1;` , [email]);
+        const arr = data.rows;
+        if(arr.length != 0){
+            return res.status(400).json({
+                message: "user already exist"
+            })
+        }
         if(!(email && password)){
             return res.status(400).json({message:"user input required"});
         }
@@ -115,6 +123,75 @@ const login = async (req, res) => {
     }
 }
 
+//Create a login 
+const forgotPassword = async (req, res) => {
+    const {email} = req.body;
+    try{
+        if(!(email)){
+            return res.status(400).json({message:"user input required"});
+        }
+        const data = await client.query(`SELECT * FROM Administrator WHERE email= $1;` , [email]);
+        const arr = data.rows;
+        if(arr.length == 0){
+            return res.status(400).json({
+                message: "user doesn't exist"
+            })
+        }
+
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: "nsfastracking@gmail.com",
+                pass: "Tracking#1"
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
+        })
+
+        
+        let emailBody = {
+            from: 'nsfastracking@gmail.com', // sender address
+            to: email, // recipient
+            subject: 'Resert Account password link', // Subject line
+            //Email Body
+            html:
+            `<h3>Greetings ${arrData[0].fname},</h3><br>
+            <h3>This email serves to inform you that your account is now active😊, <br>
+                Below are your login credentials you, your password can be updated at your own discretion on our platform:
+            </h3><br>
+            <h2><ul>
+                <u>Login Details</u><h2/>
+                Username: ${email}<br>
+                password: ${arrData[0].password}<br>
+                visit our site at <a></a>
+                </ul>
+            <h3>
+                kind Regards,<br>
+                HR System
+            </h3>`
+        };
+    
+        transporter.sendMail(emailBody, function (error, results){
+            if(error){
+                return res.status(400).json({
+                    message: "email failed to send"
+                })
+            }
+            return res.status(200).json({
+                message: 'Email has been sent, with your login credentials'
+            }) //Return a status 200 if there is no error
+        })
+    }
+    catch (error) {
+        res.status(500).json({
+            error: "Database error while logging in!"
+        })
+    }
+}
+
 //Create function to get all userprofiles
 const userProfile = async (req, res, next) => {
     try{  
@@ -122,7 +199,7 @@ const userProfile = async (req, res, next) => {
             if(error){ 
                 return next(error)
             }
-            res.status(200).json(results.rows) //Return a status 200 if there is no error
+            return res.status(200).json(results.rows) //Return a status 200 if there is no error
         })
     }
     catch (err) {
@@ -135,6 +212,7 @@ const userProfile = async (req, res, next) => {
 module.exports ={
     register,
     login,
+    forgotPassword,
     userProfile,
     SECRET_KEY
 }
