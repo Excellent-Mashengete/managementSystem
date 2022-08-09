@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 const randomize = require("rand-token")
 const SECRET_KEY = randomize.generate(20) //generate random token of up to 20 digits 
-const nodemailer = require('nodemailer')//Send emails
+const nodeMailer = require('nodemailer')//Send emails
 
 //Register a new user in the database 
 const register = async (req, res) => {
@@ -138,51 +138,43 @@ const forgotPassword = async (req, res) => {
             })
         }
 
-        let transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
+        let transporter = nodeMailer.createTransport({
+            host: 'smtp.gmail.com',
             port: 465,
             secure: true,
             auth: {
-                user: "nsfastracking@gmail.com",
-                pass: "Tracking#1"
-            },
-            tls: {
-                rejectUnauthorized: false
+                type: "OAuth2",
+                user: 'nsfastracking@gmail.com',
+                pass: 'Tracking#1',
+                accessToken: SECRET_KEY,
             }
-        })
+        });
 
         
-        let emailBody = {
+        let mailOptions = {
             from: 'nsfastracking@gmail.com', // sender address
             to: email, // recipient
             subject: 'Resert Account password link', // Subject line
             //Email Body
             html:
-            `<h3>Greetings ${arrData[0].fname},</h3><br>
-            <h3>This email serves to inform you that your account is now active😊, <br>
-                Below are your login credentials you, your password can be updated at your own discretion on our platform:
-            </h3><br>
-            <h2><ul>
-                <u>Login Details</u><h2/>
-                Username: ${email}<br>
-                password: ${arrData[0].password}<br>
-                visit our site at <a></a>
-                </ul>
-            <h3>
-                kind Regards,<br>
+            `<b>Greetings ,<br></br>
+
+                kind Regards,<br></br>
                 HR System
-            </h3>`
+            <b>`
         };
     
-        transporter.sendMail(emailBody, function (error, results){
+        transporter.sendMail(mailOptions, (error, results) => {
             if(error){
+                console.log(error)
                 return res.status(400).json({
-                    message: "email failed to send"
+                    // message: "email failed to send"
+                    error: error
                 })
             }
             return res.status(200).json({
                 message: 'Email has been sent, with your login credentials'
-            }) //Return a status 200 if there is no error
+            }, results ) //Return a status 200 if there is no error
         })
     }
     catch (error) {
