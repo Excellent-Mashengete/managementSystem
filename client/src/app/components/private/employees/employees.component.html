@@ -1,0 +1,137 @@
+ <p-toast></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<!--
+<div class="container">
+    <div class="card">
+        <p-toolbar>
+            <ng-template pTemplate="left">
+                <button pButton pRipple icon="pi pi-plus" class="p-button-success p-mr-5">New</button>
+            </ng-template>
+        </p-toolbar>
+
+        <p-table [value]="emp" [rows]="10"  [paginator]="true" responsiveLayout="scroll" dataKey="id" >
+            <ng-template pTemplate="caption">
+                <div class="row  ">
+                    <div>
+                        <h5 class="p-m-0">Manage Books</h5>
+                    </div>
+
+                    <div>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input class="form-control" pInputText type="text" placeholder="Search..." />
+                        </span>
+                    </div>
+                </div>
+            </ng-template>[value]="books"
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="fname">First Name <p-sortIcon field="fname"></p-sortIcon></th>
+                    <th pSortableColumn="lname">Last Name <p-sortIcon field="lname"></p-sortIcon></th>
+                    <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+                    <th pSortableColumn="phone_number">Contact<p-sortIcon field="phone_number"></p-sortIcon></th>
+                    <th pSortableColumn="hiredate">Hire Date <p-sortIcon field="hiredate"></p-sortIcon></th>
+                    <th pSortableColumn="salary">Salary <p-sortIcon field="salary"></p-sortIcon></th>
+                    <th pSortableColumn="dept_id">Department <p-sortIcon field="dept_id"></p-sortIcon></th>
+                    
+                    <th >Action</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-emp >
+                <tr>
+                    <td>{{emp.first_name }}</td>
+                    <td>{{emp.last_name }}</td>
+                    <td>{{emp.email}}</td>
+                    <td>{{emp.phone_number}}</td>
+                    <td>{{emp.hiredate | date: 'dd MMM YYYY'}}</td>
+                    <td>{{emp.salary}}</td>
+                    <td>{{emp.dept_id}}</td>
+                   
+                    <td>{{emp.updated_at | date: 'dd MMM YYYY'}}</td>
+                    <td >
+                        <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-success " ></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success " ></button>
+                        <button pButton pRipple icon="pi pi-trash" (click)="deleteProduct()" class="p-button-rounded p-button-warning" ></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                     In total there are {{books ? books.length : 0 }} books. 
+                </div>
+            </ng-template>
+        </p-table>
+    </div>
+</div> -->
+
+<div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+            Our products
+            <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse a list of Flowbite products designed to help you work and play, stay organized, get answers, keep in touch, grow your business, and more.</p>
+        </caption>
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="py-3 px-6">
+                    First Name
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Last Name
+                </th>
+                <th scope="col" class="py-3 px-6">
+                   Email
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Phone Number
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Hire Date
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Salary
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Department
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr  *ngFor="let i of emp" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{i.first_name }}
+                </th>
+                <td class="py-4 px-6">
+                    {{i.last_name }}
+                </td>
+                <td class="py-4 px-6">
+                    {{i.email }}
+                </td>
+                <td class="py-4 px-6">
+                    {{i.phone_number }}
+                </td>
+                <td class="py-4 px-6">
+                    {{i.hiredate }}
+                </td>
+                <td class="py-4 px-6">
+                    {{i.salary }}
+                </td>
+                <td class="py-4 px-6">
+                    {{i.dept_id }}
+                </td>
+               <td>
+                    <button pButton pRipple icon="pi pi-eye"  class="p-button-rounded p-button-success " ></button>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary " ></button>
+                    <button pButton pRipple icon="pi pi-trash" (click)="deleteProduct(i)" class="p-button-rounded p-button-danger" ></button>
+               </td>
+            </tr>
+        </tbody>
+        <tfoot *ngFor="let i of emp">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{ this.totalNumber}} employees. 
+           </div>
+        </tfoot>
+    </table>
+</div>

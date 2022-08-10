@@ -32,7 +32,7 @@ CREATE TABLE Employees (
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(150) NOT NULL,
     phone_number VARCHAR(150),
-    hiredate TIMESTAMP NOT NULL DEFAULT NOW(),
+    hiredate TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     salary decimal(8,2),
     dept_id int,
     FOREIGN KEY(dept_id) REFERENCES Department(dept_id)
@@ -45,4 +45,18 @@ CREATE TABLE Job_History (
     start_date Date NOT NULL,
     end_date Date NOT NULL,
     FOREIGN KEY(emp_id) REFERENCES Employees(emp_id)
+);
+
+DROP TABLE IF EXISTS oldemployees CASCADE;
+CREATE TABLE oldemployees (
+    emp_id SERIAL PRiMARY KEY NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    phone_number VARCHAR(150),
+    hiredate TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    enddate TIMESTAMPTZ NOT NULL DEFAULT now(),
+    salary decimal(8,2),
+    dept_id int,
+    FOREIGN KEY(dept_id) REFERENCES Department(dept_id)
 );
