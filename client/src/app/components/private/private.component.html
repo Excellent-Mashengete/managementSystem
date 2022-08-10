@@ -1,8 +1,6 @@
-<app-navbar></app-navbar>
-
-<div class="drawer">
+<div class="drawer drawer-mobile">
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" /> 
-    <div class="drawer-content flex flex-col">
+    <div class="drawer-content flex flex-col" style="background-color:whitesmoke;">
       <!-- Navbar -->
         <div class="w-full navbar bg-base-300">
             <div class="flex-none lg:hidden">
@@ -10,26 +8,29 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </label>
             </div> 
-            <div class="flex-1 px-2 mx-2">Navbar Title</div>
-            <div class="flex-none hidden lg:block">
-                <ul class="menu menu-horizontal">
-                    <!-- Navbar menu content here -->
-                    <li><a >Navbar Item 1</a></li>
-                    <li><a>Navbar Item 2</a></li>
-                </ul>
+            <div class="flex-1">
+                <a routerLink="/dash" class="btn btn-ghost normal-case text-xl" id="logo">HR MANAGEMENT</a>
+            </div>
+            <div class="flex-1 px-2 mx-2">
             </div>
         </div>
 
-      <!-- Page content here -->
-      <router-outlet></router-outlet>
+        <!-- Page content here -->
+        <router-outlet></router-outlet>
+        <app-footer></app-footer>
     </div> 
-    <div class="drawer-side" style="background-color: grey;">
+    <div class="drawer-side" >
         <label for="my-drawer-2" class="drawer-overlay"></label> 
-        <ul class="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
-          <!-- Sidebar content here -->
-            <li><a routerLink="/dash/employees">Sidebar Item 1</a></li>
-            <li><a routerLink="/dash/oldemployees">Sidebar Item 2</a></li>
+        <ul style="background-color: #053C5E" class="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
+         
+            <!-- Sidebar content here -->
+            <li><a routerLink="/dash" class="btn btn-ghost normal-case text-xl" id="logo">HR MANAGEMENT</a></li>
+            <div class="divider" style="color:black;"></div> 
+            <li><i class="pi pi-list"><a routerLink="/dash">All Employees</a></i></li>
+            <li><i class="pi pi-check" ><a routerLink="/dash/employees">Current Employees</a></i></li>
+            <li><i class="pi pi-times"><a routerLink="/dash/oldemployees">Past Employees</a></i></li>
+            <li><i class="pi pi-users"><a routerLink="/dash/history">Employee History</a></i></li>
+            <li><i class="pi pi-sign-out"><a class="logout" (click)="Logout()">Logout</a></i></li>
         </ul>    
     </div>
 </div>
-<app-footer></app-footer>

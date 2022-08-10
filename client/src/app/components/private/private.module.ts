@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 //Components
-import { NavbarComponent } from './navbar/navbar.component';
+
 import { PrivateComponent } from './private.component';
 import { FooterComponent } from './footer/footer.component';
 import { EmployeesComponent } from './employees/employees.component';
@@ -35,10 +35,12 @@ import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CardModule, } from 'primeng/card';
+import { EmphistoryComponent } from './emphistory/emphistory.component';
 const routes: Routes = [
   {path:'dash', component: PrivateComponent, canActivate: [AuthGuard],
   children:[
     {path:'employees', component: EmployeesComponent},
+    {path:'history', component: EmphistoryComponent},
     {path:'oldemployees', component: OldemployeesComponent}
   ]},
 ]
@@ -46,10 +48,10 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     PrivateComponent,
-    NavbarComponent,
     FooterComponent,
     EmployeesComponent,
-    OldemployeesComponent
+    OldemployeesComponent,
+    EmphistoryComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../auth/service/authentication.service';
 
 @Component({
   selector: 'app-private',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrivateComponent implements OnInit {
 
-  constructor() { }
+  constructor( public auth:AuthenticationService,
+    private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  Logout(){
+    this.auth.doLogout()
   }
 
 }
