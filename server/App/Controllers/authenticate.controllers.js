@@ -64,16 +64,18 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     const {email,password} = req.body;
     try{
+        if(!(email && password)){
+            return res.status(400).json({message:"user input required"});
+        }
+
         const data = await client.query(`SELECT * FROM Administrator WHERE email= $1;` , [email]);
-        const arr = data.rows;
-        if(arr.length != 0){
+        arr = data.rows;
+        if(arr.length == 0){
             return res.status(400).json({
                 message: "user already exist"
             })
         }
-        if(!(email && password)){
-            return res.status(400).json({message:"user input required"});
-        }
+        
 
         const logData = await client.query(`SELECT * FROM Administrator WHERE email= $1;`,
         [email]); //Check if user exist
@@ -123,67 +125,6 @@ const login = async (req, res) => {
     }
 }
 
-//Create a login 
-const forgotPassword = async (req, res) => {
-    const {email} = req.body;
-    try{
-        if(!(email)){
-            return res.status(400).json({message:"user input required"});
-        }
-        const data = await client.query(`SELECT * FROM Administrator WHERE email= $1;` , [email]);
-        const arr = data.rows;
-        if(arr.length == 0){
-            return res.status(400).json({
-                message: "user doesn't exist"
-            })
-        }
-
-        let transporter = nodeMailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 465,
-            secure: true,
-            auth: {
-                type: "OAuth2",
-                user: 'nsfastracking@gmail.com',
-                pass: 'Tracking#1',
-                accessToken: SECRET_KEY,
-            }
-        });
-
-        
-        let mailOptions = {
-            from: 'nsfastracking@gmail.com', // sender address
-            to: email, // recipient
-            subject: 'Resert Account password link', // Subject line
-            //Email Body
-            html:
-            `<b>Greetings ,<br></br>
-
-                kind Regards,<br></br>
-                HR System
-            <b>`
-        };
-    
-        transporter.sendMail(mailOptions, (error, results) => {
-            if(error){
-                console.log(error)
-                return res.status(400).json({
-                    // message: "email failed to send"
-                    error: error
-                })
-            }
-            return res.status(200).json({
-                message: 'Email has been sent, with your login credentials'
-            }, results ) //Return a status 200 if there is no error
-        })
-    }
-    catch (error) {
-        res.status(500).json({
-            error: "Database error while logging in!"
-        })
-    }
-}
-
 //Create function to get all userprofiles
 const userProfile = async (req, res, next) => {
     try{  
@@ -204,7 +145,6 @@ const userProfile = async (req, res, next) => {
 module.exports ={
     register,
     login,
-    forgotPassword,
     userProfile,
     SECRET_KEY
 }

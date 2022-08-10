@@ -29,8 +29,8 @@ export class EmployeesService {
     return this.http.get(`${this.baseUrl}oldemplist`)
   }
 
-  moveEmpToOldEmp(oldemps: Employees, body:Employees ) : Observable<any>{
-    return this.http.post(`${this.baseUrl}add_old_emp/${oldemps.emp_id}`,[body.first_name, body.last_name, body.email, body.phone_number, body.hiredate, body.salary, body.dept_id] )
+  moveEmpToOldEmp(oldemps:any, id: Employees,) : Observable<any>{
+    return this.http.post(`${this.baseUrl}add_old_emp/${id.emp_id}`,oldemps)
   }
 
   addNewEmp(emps: Employees) : Observable<any>{

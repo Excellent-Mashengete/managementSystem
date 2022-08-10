@@ -41,18 +41,28 @@ export class EmployeesComponent implements OnInit {
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.employees.moveEmpToOldEmp(details, details.emp_id).subscribe({
-          next:data =>{
-            console.log(data)
-            // this.employees.deleteEmpByID(details).subscribe();
-          }
-        })
+        let user ={
+          first_name :details.first_name,
+          last_name :details.last_name,
+          email: details.email,
+          phone_number:details.phone_number,
+          hiredate:details.hiredate,
+          salary:details.salary,
+          dept_id:details.dept_id
+        }
+        console.log(user)
+        this.employees.moveEmpToOldEmp(user, details).subscribe();
+        this.employees.deleteEmpByID(details).subscribe();
         this.getEmp();
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Book Deleted', life: 3000})
+        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Employee Deleted', life: 3000})
       },
       reject: () => {
         this.messageService.add({severity:'error', summary: 'Error', detail: 'You have rejected', life: 3000})
       }
     })
+  }
+
+  openNew(){
+
   }
 }
