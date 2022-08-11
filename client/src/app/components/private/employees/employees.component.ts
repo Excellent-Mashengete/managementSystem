@@ -18,6 +18,7 @@ export class EmployeesComponent implements OnInit {
   totalNumber: number = 0
   productDialog: boolean = false;
   submitted = false;
+  term = '';
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,  

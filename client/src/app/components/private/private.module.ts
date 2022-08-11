@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 //Components
 import { PrivateComponent } from './private.component';
@@ -13,6 +15,7 @@ import { EmphistoryComponent } from './emphistory/emphistory.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 //Guards
 import { AuthGuard } from 'src/app/auth-guards/auth.guard';
+
 
 //Primeng Imports
 //primeNG 
@@ -45,7 +48,7 @@ const routes: Routes = [
     {path:'home', component: DashboardComponent},
     {path:'oldemployees', component: OldemployeesComponent},
     {path:'history', component: EmphistoryComponent},
-
+    {path:'', redirectTo:'/dash/home', pathMatch:'full'},
 
   ]},
 ]
@@ -61,6 +64,17 @@ const routes: Routes = [
     DashboardComponent
   ],
   imports: [
+    Ng2SearchPipeModule,
+     //loader
+     NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.wanderingCubes,
+      backdropBackgroundColour: 'rgba(0,0,0,0.5)',
+      backdropBorderRadius: '4px',
+      primaryColour: '#ffffff',
+      secondaryColour: '#ffffff',
+      tertiaryColour: '#ffffff',
+      fullScreenBackdrop: false,
+    }),
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
