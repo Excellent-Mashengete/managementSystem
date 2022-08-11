@@ -30,8 +30,8 @@ client.connect((err) =>{ // Connect to the Database
 });
 
 //call our routes
-const auth = require("./App/Routes/authenticate")
-const emp = require("./App/Routes/employee")
+const auth = require("./App/Routes/authenticate");
+const emp = require("./App/Routes/employee");
 
 const port = process.env.PORT || 7070;
 

@@ -1,38 +1,65 @@
-<div class="container mx-auto">
+<div class="container mx-auto" style="margin-top:10vh;">
     <div class="flex justify-center">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="card w-96 bg-base-100 shadow-xl image-full">
-                <figure><img src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div class="card w-96 bg-base-100 shadow-xl image-full" *ngFor="let admins of admin">
+                <figure><img src="" alt="adminstratio" /></figure>
                 <div class="card-body">
-                <h2 class="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div class="card-actions justify-end">
-                
-                </div>
+                    <h2 class="card-title">{{admins.dept_name}}</h2>
+                    <div class="card-actions justify-end">
+                        <div class="numbers">
+                            <p class="card-title">{{admins.total}}<p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card w-96 bg-base-100 shadow-xl image-full">
-                <figure><img src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>
+            <div class="card w-96 bg-base-100 shadow-xl image-full" *ngFor="let finces of finace">
+                <figure><img src="" alt="finacial" /></figure>
                 <div class="card-body">
-                <h2 class="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div class="card-actions justify-end">
-                    <button class="btn btn-primary">Buy Now</button>
-                </div>
+                    <h2 class="card-title">{{finces.dept_name}}</h2>
+                    <div class="card-actions justify-end">
+                        <div class="numbers">
+                            <p class="card-title">{{finces.total}}<p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card w-96 bg-base-100 shadow-xl image-full">
-                <figure><img src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>
+            <div class="card w-96 bg-base-100 shadow-xl image-full" *ngFor="let hrs of hr">
+                <figure><img src="" alt="Hr" /></figure>
                 <div class="card-body">
-                <h2 class="card-title">Shoes!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
-                <div class="card-actions justify-end">
-                    <button class="btn btn-primary">Buy Now</button>
-                </div>
+                    <h2 class="card-title">{{hrs.dept_name}}</h2>
+                    <div class="card-actions justify-end">
+                        <div class="numbers">
+                            <p class="card-title">{{hrs.total}}<p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="card w-96 bg-base-100 shadow-xl image-full" *ngFor="let i of it">
+                <figure><img src="src/assets/download.jpeg" alt="It" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">{{i.dept_name}}</h2>
+                    <div class="card-actions justify-end">
+                        <div class="numbers">
+                            <p class="card-title">{{i.total}}<p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card w-96 bg-base-100 shadow-xl image-full" *ngFor="let markets of market">
+                <figure><img src="" alt="Shoes" /></figure>
+                <div class="card-body">
+                    <h2 class="card-title">{{markets.dept_name}}</h2>
+                    <div class="card-actions justify-end">
+                        <div class="numbers">
+                            <p class="card-title">{{markets.total}}<p>
+                        </div>
+                    </div>
+                </div>
+            </div> 
         </div>
     </div>
 </div>

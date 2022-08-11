@@ -47,7 +47,6 @@ const routes: Routes = [
     {path:'employees', component: EmployeesComponent},
     {path:'home', component: DashboardComponent},
     {path:'oldemployees', component: OldemployeesComponent},
-    {path:'history', component: EmphistoryComponent},
     {path:'', redirectTo:'/dash/home', pathMatch:'full'},
 
   ]},
