@@ -1,6 +1,6 @@
 <div class="bg-white">
   <div class="p-5 max-w-21 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-      Current Employee List
+      Past Employee List
   </div>
  
   <div class="flex justify-end mb-5">
@@ -24,4 +24,12 @@
       </div>
     </div>
   </div>
+  <ngx-loading
+  [show]="loading"
+  [config]="{
+    animationType: ngxLoadingAnimationTypes.circleSwish,
+    primaryColour: '#ffffff', secondaryColour: '#ffffff',
+    backdropBorderRadius: '3px'
+  }">
+  </ngx-loading>
 </div>

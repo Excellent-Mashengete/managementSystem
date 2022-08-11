@@ -19,11 +19,11 @@
         <label for="my-drawer-3" class="drawer-overlay"></label> 
         <ul  class="menu p-4 overflow-y-auto w-80 bg-sky-800 ">
             <!-- Sidebar content here  style="background-color: #053C5E" -->
-            <li><a routerLink="/dash" class="btn btn-ghost normal-case text-xl" id="logo">HR MANAGEMENT</a></li>
+            <li><a routerLink="/dash" (click)="loading = !loading" class="btn btn-ghost normal-case text-xl" id="logo">EMPLOYEE RECORD SYSTEM</a></li>
             <div class="divider" style="color:black;"></div> 
-            <li><i class="pi pi-home"><a routerLink="/dash/home">Dashboard</a></i></li>
-            <li><i class="pi pi-check" ><a routerLink="/dash/employees">Current Employees</a></i></li>
-            <li><i class="pi pi-times"><a routerLink="/dash/oldemployees">Past Employees</a></i></li>
+            <li><i class="pi pi-home"><a (click)="loading = !loading" routerLink="/dash/home">Dashboard</a></i></li>
+            <li><i class="pi pi-check" ><a (click)="loading = !loading" routerLink="/dash/employees">Current Employees</a></i></li>
+            <li><i class="pi pi-times"><a (click)="loading = !loading" routerLink="/dash/oldemployees">Past Employees</a></i></li>
             <li><i class="pi pi-sign-out"><a class="logout" (click)="Logout()">Logout</a></i></li>
         </ul>    
     </div>

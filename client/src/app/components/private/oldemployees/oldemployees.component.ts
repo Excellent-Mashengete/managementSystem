@@ -32,11 +32,12 @@ export class OldemployeesComponent implements OnInit {
   }
 
   getOldEmps(){
+    this.loading = true;
     this.employees.getOldEmp().subscribe({
       next:data => {
         this.loading = false;  
         this.employeeList = data
-        console.log(data)
+        
       }
     })
   }

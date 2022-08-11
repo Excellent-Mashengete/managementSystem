@@ -1,8 +1,6 @@
 export interface Empid {
-    first_name :any;
-    last_name :any;
-    email: any;
-    phone_number:any;
-    salary:any;
-    dept_id:any
+    emp_id:Number;
+    phone_number:String;
+    salary:Number;
+    dept_id:Number
 }

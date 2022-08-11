@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DepartmentNamesService } from '../service/department-names.service';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
+import { NgxLoadingComponent } from 'ngx-loading';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +9,12 @@ import { DepartmentNamesService } from '../service/department-names.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild('ngxLoading', { static: false })
+  ngxLoadingComponent!: NgxLoadingComponent;
+  showingTemplate = false;
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  public loading = false;
+
 
   constructor(
     private dash:DepartmentNamesService
@@ -19,6 +27,7 @@ export class DashboardComponent implements OnInit {
   market:any;
 
   ngOnInit(): void {
+    this.loading = true;
     this.getAdmin();
     this.getFinance();
     this.getHr();
@@ -29,8 +38,9 @@ export class DashboardComponent implements OnInit {
   getAdmin(){
     return this.dash.getAdministrationDept(1).subscribe({
       next:data =>{
+        this.loading = true;
         this.admin = data
-        console.log(this.admin)
+        this.loading = false;
       }    
     })
   }
@@ -38,8 +48,9 @@ export class DashboardComponent implements OnInit {
   getFinance(){
     return this.dash.getFinanceDept(3).subscribe({
       next:data =>{
+        this.loading = true;
         this.finace = data
-        console.log(this.finace)
+        this.loading = false;
       }
     })
   }
@@ -47,8 +58,9 @@ export class DashboardComponent implements OnInit {
   getMarket(){
     return this.dash.getMakertingDept(2).subscribe({
       next:data =>{
+        this.loading = true;
         this.market = data
-        console.log(this.market)
+        this.loading = false;
       }
     })
   }
@@ -56,8 +68,9 @@ export class DashboardComponent implements OnInit {
   getHr(){
     return this.dash.getHumanResourceDept(5).subscribe({
       next:data =>{
+        this.loading = true;
         this.hr = data
-        console.log(this.hr)
+        this.loading = false;
       }
     })
   }
@@ -65,8 +78,9 @@ export class DashboardComponent implements OnInit {
   getITDept(){
     return this.dash.getITDepartmentDept(4).subscribe({
       next:data =>{
+        this.loading = true;
         this.it = data
-        console.log(this.it)
+        this.loading = false;
       }
     })
   }

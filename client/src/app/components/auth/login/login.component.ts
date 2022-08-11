@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
@@ -13,6 +13,12 @@ import { NgxLoadingComponent } from 'ngx-loading';
   providers: [MessageService]
 })
 export class LoginComponent implements OnInit {
+  @ViewChild('ngxLoading', { static: false })
+  ngxLoadingComponent!: NgxLoadingComponent;
+  showingTemplate = false;
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  public loading = false;
+
   Form = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
@@ -28,6 +34,7 @@ export class LoginComponent implements OnInit {
     private messageService: MessageService,) { }
 
   ngOnInit(): void {
+    this.loading = false;
     this.Form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]],
@@ -43,6 +50,7 @@ export class LoginComponent implements OnInit {
 
     if(this.Form.invalid)
     { 
+      this.loading = false;
       return
     }
     let user = {
@@ -51,15 +59,18 @@ export class LoginComponent implements OnInit {
     }
     this.auth.login(user).subscribe({
       next:data =>{
+        this.loading = true;
         this.userToken = data
         localStorage.setItem('access_token', this.userToken.token)
         //route to dashboard if login was successful
+        this.loading = false;
         this.router.navigate(['/dash'])
 
         //call user the getprofile function pass the token as an argument
         this.auth.getUserProfile(this.userToken.token)
       },
       error: err => {
+        this.loading = false;
         this.messageService.add({
           key: 'tc', severity:'error', summary: 'Error', detail: err.error.message, life: 3000
         });

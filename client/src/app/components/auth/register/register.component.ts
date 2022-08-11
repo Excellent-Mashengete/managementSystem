@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../service/authentication.service';
@@ -14,6 +14,12 @@ import { NgxLoadingComponent } from 'ngx-loading';
   providers: [MessageService]
 })
 export class RegisterComponent implements OnInit {
+  @ViewChild('ngxLoading', { static: false })
+  ngxLoadingComponent!: NgxLoadingComponent;
+  showingTemplate = false;
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  public loading = false;
+
   Form = new FormGroup({
     fname: new FormControl(''),
     lname: new FormControl(''),
@@ -33,6 +39,7 @@ export class RegisterComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.loading = false;
     this.Form = this.formBuilder.group({
       fname: ['', Validators.required],
       lname: ['', Validators.required],
@@ -66,6 +73,7 @@ export class RegisterComponent implements OnInit {
 
     if(this.Form.invalid)
     { 
+      this.loading = false;
       return
     }
     let user = {//assign all entered values in the form to a variable user
@@ -77,15 +85,18 @@ export class RegisterComponent implements OnInit {
 
     this.auth.register(user).subscribe({
       next:data =>{
+        this.loading = false;
         this.userToken = data
         localStorage.setItem('access_token', this.userToken.token)
         //route to dashboard if login was successful
+        this.loading = true;
         this.router.navigate(['/dash'])
 
         //call user the getprofile function pass the token as an argument
         this.auth.getUserProfile(this.userToken.token)
       },
       error: err => {
+        this.loading = false;
         this.messageService.add({
           key: 'tc', severity:'error', summary: 'Error', detail: err.error.message, life: 3000
         });  

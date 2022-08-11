@@ -141,4 +141,25 @@ module.exports.Add_New_Emp = async (req,res) => {
     };
 }
 
-
+module.exports.UpdateUserInfor = async (req,res) => {
+    const emp_id = parseInt(req.params.emp_id)
+    const { phone_number, salary, dept_id} = req.body
+    try {
+        client.query(`
+        UPDATE employees SET phone_number = $1, salary = $2, dept_id= $3  WHERE emp_id=$4`, 
+            [phone_number, salary, dept_id, emp_id], (error, results)=>{ //Add new employee
+            if(error){ //checks for errors and return them 
+                return res.status(400).json({
+                    message: "Unable to update employee details"
+                 }) //Throw the error in the terminal
+            }
+            res.status(200).json(results.rows) //Return a status 200 if there is no error
+        })
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({
+           error: "Database error while retrieving products", 
+        });
+    };
+}

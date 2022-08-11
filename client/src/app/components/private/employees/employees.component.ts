@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, ViewChild} from '@angular/core';
+import { ngxLoadingAnimationTypes } from 'ngx-loading';
+import { NgxLoadingComponent } from 'ngx-loading';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api'; 
 import { EmployeesService } from '../service/employees.service';
 import { Employees } from 'src/app/interfaces/employees';
+import { Empid } from 'src/app/interfaces/empid';
 
 @Component({
   selector: 'app-employees',
@@ -14,11 +16,19 @@ import { Employees } from 'src/app/interfaces/employees';
   providers: [MessageService, ConfirmationService]
 })
 export class EmployeesComponent implements OnInit {
+  @ViewChild('ngxLoading', { static: false })
+  ngxLoadingComponent!: NgxLoadingComponent;
+  showingTemplate = false;
+  public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
+  public loading = false;
+
   emp: any 
   totalNumber: number = 0
   productDialog: boolean = false;
   submitted = false;
   term = '';
+  emplist!: Empid
+
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,  
@@ -33,6 +43,7 @@ export class EmployeesComponent implements OnInit {
     department: new FormControl(''),
   });
   
+  
   keyPressAlphanumeric(event: { keyCode: number; preventDefault: () => void; }) {
 
     var inp = String.fromCharCode(event.keyCode);
@@ -46,7 +57,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.loading = true;
     this.Form = this.formBuilder.group({
       fname: ['', Validators.required],
       lname: ['', Validators.required],
@@ -61,6 +72,7 @@ export class EmployeesComponent implements OnInit {
   //Open a modal
   openNew(){
     this.submitted = false;
+ 
     this.productDialog = true;
     this.Form.reset();
   }
@@ -73,6 +85,7 @@ export class EmployeesComponent implements OnInit {
     //Validate if modal is empty or no
     if(this.Form.invalid)
     { 
+      this.loading = false;
       return
     }
     let user = { //register a new employee
@@ -86,12 +99,15 @@ export class EmployeesComponent implements OnInit {
 
     this.employees.addNewEmp(user).subscribe({
       next:data =>{
+        this.loading = true;
         this.productDialog = false;
         
         this.messageService.add({severity:'success', summary: 'Successful', detail: 'Employee Added', life: 3000})
         this.getEmp() 
+        this.loading = false;
       },
       error: err => {
+        this.loading = false;
         this.messageService.add({severity:'error', summary: 'Error', detail: err.error.message, life: 3000}) 
       }
     }) 
@@ -100,7 +116,9 @@ export class EmployeesComponent implements OnInit {
   getEmp(){
     return this.employees.getEmployees().subscribe({
       next:data =>{
+        this.loading = true;
        this.emp = data
+       this.loading = false;
        this.getTotal(data.length)
       }
     })
@@ -126,12 +144,15 @@ export class EmployeesComponent implements OnInit {
           salary:details.salary,
           dept_id:details.dept_id
         }
+        this.loading = true;
         this.employees.moveEmpToOldEmp(user, details).subscribe();
         this.employees.deleteEmpByID(details).subscribe();
         this.getEmp();
+        this.loading = false;
         this.messageService.add({severity:'success', summary: 'Successful', detail: 'Employee Deleted', life: 3000})
       },
       reject: () => {
+        this.loading = false;
         this.messageService.add({severity:'error', summary: 'Error', detail: 'You have rejected', life: 3000})
       }
     })
@@ -143,4 +164,43 @@ export class EmployeesComponent implements OnInit {
   get f():{ [key: string]: AbstractControl }{
     return this.Form.controls;//it traps errors in the form
   }  
+
+
+
+
+
+
+
+
+
+
+  updateEmp(detail:Empid){
+    this.submitted = true;
+    console.log(detail)
+    if(this.Form.invalid)
+    { 
+      this.loading = false;
+      return
+    }
+
+    let user = { //register a new employee
+      phone_number: this.emplist.phone_number,
+      salary: this.emplist.salary,
+      dept_id: this.emplist.dept_id
+    }
+
+
+
+    // this.employees.updateEmpDetails(user, 1).subscribe({
+    //   next:data => {
+
+    //   },
+    //   error: err => {
+    //     this.loading = false;
+    //     this.messageService.add({severity:'error', summary: 'Error', detail: err.error.message, life: 3000}) 
+    //   }
+    // })
+  }
+
+
 }

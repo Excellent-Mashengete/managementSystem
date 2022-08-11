@@ -27,7 +27,6 @@ export class DepartmentNamesService {
     return this.http.get(`${this.baseUrl}deptname/${id}`, )
   }
   
-
   getHumanResourceDept(id: Number):Observable<any>{
     return this.http.get(`${this.baseUrl}deptname/${id}`, )
   } 
