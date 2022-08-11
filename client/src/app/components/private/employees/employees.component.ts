@@ -61,7 +61,9 @@ export class EmployeesComponent implements OnInit {
       }
     })
   }
-
+  update(){
+    
+  }
   openNew(){
 
   }

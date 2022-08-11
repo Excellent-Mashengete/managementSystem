@@ -1,1 +1,24 @@
-<p>oldemployees works!</p>
+<div class="bg-white">
+  <div class="p-5 max-w-21 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+      Current Employee List
+  </div>
+
+ 
+  <div class="container mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="card card-side bg-base-100 shadow-xl" *ngFor="let emps of employeeList" >
+        <figure><img src="../../../../assets/download.jpeg"  alt="Movie"></figure>
+        <div class="card-body"  >
+          <h2 class="card-title">{{emps.first_name}}  {{emps.last_name}}</h2>
+          <p>{{emps.email}}</p>
+          <p>{{emps.phone_number}}</p>
+          <p>Start Date: {{emps.hiredate | date: 'dd MMM YYYY'}}</p>
+          <p>End Date: {{emps.enddate | date: 'dd MMM YYYY'}}</p>
+          <div class="flex justify-end">
+           <div> <i class="pi pi-clock"> {{emps.years }} years</i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

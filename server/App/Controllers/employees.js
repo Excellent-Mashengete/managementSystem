@@ -1,11 +1,12 @@
-const { Client } = require("pg");
 const client = require("../Config/db.config");
 
 //Retrieve all employees
 module.exports.employees = async (req, res) => {
     try {
         client.query(`
-        SELECT * FROM Employees ORDER BY first_name ASC`, (error, results) =>{ //returns all employess list in the database from Employees and ascending order
+            SELECT emp_id, first_name, last_name, email, phone_number, hiredate, salary, a.dept_id, a.dept_name
+            FROM Employees e
+            INNER JOIN Department a ON e.dept_id = a.dept_id ORDER BY e.first_name ASC`, (error, results) =>{ //returns all employess list in the database from Employees and ascending order
             if(error){ //checks for errors and return them 
                 return res.status(400).json({
                     error: "Database error"
@@ -49,7 +50,10 @@ module.exports.employeesById = async (req,res) => {
 module.exports.oldEmployees = async (req, res) => {
     try {
         client.query(`
-        SELECT * FROM oldemployees ORDER BY first_name ASC`, (error, results) =>{ //returns all employess list in the database from Employees and ascending order
+        SELECT emp_id, first_name, last_name, email, phone_number, hiredate,
+        enddate, DATE_PART('year', enddate::date)-DATE_PART('year', hiredate::date) as years ,a.dept_id, a.dept_name
+        FROM oldemployees e 
+        INNER JOIN Department a ON e.dept_id = a.dept_id ORDER BY e.first_name`, (error, results) =>{ //returns all employess list in the database from Employees and ascending order
             if(error){ //checks for errors and return them 
                 return res.status(400).json({
                     error: "Database error"

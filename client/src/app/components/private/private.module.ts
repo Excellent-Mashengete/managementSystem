@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 //Components
-
 import { PrivateComponent } from './private.component';
 import { FooterComponent } from './footer/footer.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { OldemployeesComponent } from './oldemployees/oldemployees.component';
-
+import { EmphistoryComponent } from './emphistory/emphistory.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 //Guards
 import { AuthGuard } from 'src/app/auth-guards/auth.guard';
 
@@ -35,15 +35,20 @@ import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CardModule, } from 'primeng/card';
-import { EmphistoryComponent } from './emphistory/emphistory.component';
+
+
 const routes: Routes = [
   {path:'dash', component: PrivateComponent, canActivate: [AuthGuard],
   children:[
     {path:'employees', component: EmployeesComponent},
+    {path:'home', component: DashboardComponent},
+    {path:'oldemployees', component: OldemployeesComponent},
     {path:'history', component: EmphistoryComponent},
-    {path:'oldemployees', component: OldemployeesComponent}
+
+
   ]},
 ]
+
 
 @NgModule({
   declarations: [
@@ -51,7 +56,8 @@ const routes: Routes = [
     FooterComponent,
     EmployeesComponent,
     OldemployeesComponent,
-    EmphistoryComponent
+    EmphistoryComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,

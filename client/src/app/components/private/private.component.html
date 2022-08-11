@@ -9,7 +9,12 @@
                 </label>
             </div> 
             <div class="flex-1">
-                <a routerLink="/dash" class="btn btn-ghost normal-case text-xl" id="logo">HR MANAGEMENT</a>
+                <div class="input-group">
+                  <input type="text" placeholder="Search…" class="input input-bordered" />
+                  <button class="btn btn-square">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                  </button>
+                </div>
             </div>
             <div class="flex-1 px-2 mx-2">
             </div>
@@ -20,13 +25,12 @@
         <app-footer></app-footer>
     </div> 
     <div class="drawer-side" >
-        <label for="my-drawer-2" class="drawer-overlay"></label> 
-        <ul  class="menu p-4 overflow-y-auto w-50 bg-sky-800 text-base-content">
-         
+        <label for="my-drawer-3" class="drawer-overlay"></label> 
+        <ul  class="menu p-4 overflow-y-auto w-80 bg-sky-800 ">
             <!-- Sidebar content here  style="background-color: #053C5E" -->
             <li><a routerLink="/dash" class="btn btn-ghost normal-case text-xl" id="logo">HR MANAGEMENT</a></li>
             <div class="divider" style="color:black;"></div> 
-            <li><i class="pi pi-list"><a routerLink="/dash">All Employees</a></i></li>
+            <li><i class="pi pi-list"><a routerLink="/dash/home">All Employees</a></i></li>
             <li><i class="pi pi-check" ><a routerLink="/dash/employees">Current Employees</a></i></li>
             <li><i class="pi pi-times"><a routerLink="/dash/oldemployees">Past Employees</a></i></li>
             <li><i class="pi pi-users"><a routerLink="/dash/history">Employee History</a></i></li>

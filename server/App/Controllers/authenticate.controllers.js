@@ -11,7 +11,7 @@ const register = async (req, res) => {
     try { 
         const data = await client.query(`SELECT * FROM Administrator WHERE email= $1;` , [email]);
         const arr = data.rows;
-        if(arr.length != 0){
+        if(arr.length == 0){
             return res.status(400).json({
                 message: "user already exist"
             })

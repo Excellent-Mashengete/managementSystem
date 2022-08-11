@@ -28,10 +28,11 @@
                         <td class="py-4 px-6" >{{i.last_name }}</td>
                         <td class="py-4 px-6">{{i.email }}</td>
                         <td class="py-4 px-6">{{i.phone_number }}</td>
-                        <td class="py-4 px-6">{{i.hiredate |  date:'dd-MMM-YYYY' }}</td>
+                        <td class="py-4 px-6">{{i.hiredate | date: 'dd MMM YYYY'}}</td>
                         <td class="py-4 px-6">{{i.salary }}</td>
-                        <td class="py-4 px-6">{{i.dept_id }}</td>
+                        <td class="py-4 px-6">{{i.dept_name }}</td>
                         <td>
+                            <button pButton pRipple icon="pi pi-trash" (click)="update()" class="p-button-rounded p-button-primary" ></button>
                             <button pButton pRipple icon="pi pi-trash" (click)="deleteProduct(i)" class="p-button-rounded p-button-danger" ></button>
                         </td>
                     </tr>
