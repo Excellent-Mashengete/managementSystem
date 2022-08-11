@@ -3,3 +3,19 @@ td .p-button-rounded {
     height:40px;
     margin-left: 10px;
 }
+a{
+    margin-left: 12px;
+}
+
+.btn-danger{
+    background-color: red;
+}
+.btn-danger:hover{
+    background-color: red;
+}
+.invalid-feedback{
+    color: red;
+}
+.is-invalid{
+    border-color: red;
+}

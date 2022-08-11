@@ -13,7 +13,7 @@
 
                         <div class="form-group col mb-2">
                             <label class="label"><span class="label-text">First name address</span></label>
-                            <input type="email" formControlName="fname" placeholder="First name"
+                            <input (keypress)="keyPressAlphanumeric($event)" type="email" formControlName="fname" placeholder="First name"
                                 class="input input-bordered w-full max-w-xs fname "
                                 [ngClass]="{ 'is-invalid':submitted && f['fname'].errors }" />
                             <div *ngIf="submitted && f['fname'].errors" class="invalid-feedback">
@@ -24,7 +24,7 @@
 
                         <div class="form-group col mb-2">
                             <label class="label"><span class="label-text">Last name address</span></label>
-                            <input type="email" formControlName="lname" placeholder="Last Name"
+                            <input (keypress)="keyPressAlphanumeric($event)" type="email" formControlName="lname" placeholder="Last Name"
                                 class="input input-bordered w-full max-w-xs lname "
                                 [ngClass]="{ 'is-invalid':submitted && f['lname'].errors }" />
                             <div *ngIf="submitted && f['lname'].errors" class="invalid-feedback">

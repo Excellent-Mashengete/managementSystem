@@ -119,12 +119,12 @@ module.exports.move_employee = async (req,res) => {
 
 //Move employee table to oldemployee by ID
 module.exports.Add_New_Emp = async (req,res) => {
-    const {emp_id,first_name, last_name, email, phone_number, salary} = req.body
+    const {first_name, last_name, email, phone_number, salary, dept_id} = req.body
     try {
         client.query(`    
-            INSERT INTO employees(emp_id, first_name, last_name, email, phone_number, salary)
+            INSERT INTO employees(first_name, last_name, email, phone_number, salary, dept_id)
             VALUES ($1, $2, $3, $4, $5, $6)`, 
-            [emp_id, first_name,last_name,email, phone_number, salary], (error, results)=>{ //Add new employee
+            [first_name,last_name,email, phone_number, salary, dept_id], (error, results)=>{ //Add new employee
             if(error){ //checks for errors and return them 
                 return res.status(400).json({
                     message: "Unable to add new employee to the database"

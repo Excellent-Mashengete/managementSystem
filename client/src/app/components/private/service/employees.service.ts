@@ -33,7 +33,7 @@ export class EmployeesService {
     return this.http.post(`${this.baseUrl}add_old_emp/${id.emp_id}`,oldemps)
   }
 
-  addNewEmp(emps: Employees) : Observable<any>{
+  addNewEmp(emps: any) : Observable<any>{
     return this.http.post(`${this.baseUrl}add_new`, emps)
   }
 }

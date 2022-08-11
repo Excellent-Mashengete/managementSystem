@@ -31,6 +31,7 @@ export class RegisterComponent implements OnInit {
     private router:Router,
     private messageService: MessageService) { }
 
+
   ngOnInit(): void {
     this.Form = this.formBuilder.group({
       fname: ['', Validators.required],
@@ -41,10 +42,21 @@ export class RegisterComponent implements OnInit {
     },{//Compares the two passwprds if they match
       validator:MustMatch("password","confirmpassword"),
     }
-
     );
   }
   
+  keyPressAlphanumeric(event: { keyCode: number; preventDefault: () => void; }) {
+
+    var inp = String.fromCharCode(event.keyCode);
+
+    if (/[a-zA-Z]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
+
   get f():{ [key: string]: AbstractControl }{
     return this.Form.controls;//it traps errors in the form
   }
