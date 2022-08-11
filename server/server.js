@@ -4,7 +4,7 @@ const app = express(); //Initialize express
 const bodyParser = require('body-parser');
 require('./App/Config/dotenv.config')
 var corsOptions = {
-  origin: "*",
+  origin: ["https://employeesystem.netlify.app", "http://localhost:4200"],
   credentials: true
 };// only allow that listerning address to connnect to the database
 

@@ -51,4 +51,4 @@ OR
 Run : docker-compose up -d
 
 ## This will run the project locally
-## To view the project that is hosted, visit: https://sneakerwear.netlify.app/
+## To view the project that is hosted, visit: https://employeesystem.netlify.app
