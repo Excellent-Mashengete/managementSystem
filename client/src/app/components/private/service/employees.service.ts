@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { Empid } from 'src/app/interfaces/empid';
+
 import { Employees } from 'src/app/interfaces/employees';
 
 @Injectable({

@@ -7,7 +7,8 @@ import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api'; 
 import { EmployeesService } from '../service/employees.service';
 import { Employees } from 'src/app/interfaces/employees';
-import { Empid } from 'src/app/interfaces/empid';
+import { Update } from 'src/app/models/update.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employees',
@@ -23,17 +24,18 @@ export class EmployeesComponent implements OnInit {
   public loading = false;
 
   emp: any 
+  empList: Update = new Update;
   totalNumber: number = 0
   productDialog: boolean = false;
   submitted = false;
   term = '';
-  emplist!: Empid
 
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,  
     private confirmationService: ConfirmationService,
-    private employees:EmployeesService) { }
+    private employees:EmployeesService,
+    private route:Router) { }
   
   Form = new FormGroup({
     fname: new FormControl(''),
@@ -69,50 +71,7 @@ export class EmployeesComponent implements OnInit {
     this.getEmp()
   }
 
-  //Open a modal
-  openNew(){
-    this.submitted = false;
- 
-    this.productDialog = true;
-    this.Form.reset();
-  }
-
-  //Save Data from a modal
-  saveData(){
-    this.submitted = true;
-    this.productDialog = true;
-
-    //Validate if modal is empty or no
-    if(this.Form.invalid)
-    { 
-      this.loading = false;
-      return
-    }
-    let user = { //register a new employee
-      first_name: this.Form.value.fname,
-      last_name: this.Form.value.lname,
-      email: this.Form.value.fname+'.'+this.Form.value.lname+'@zoho.com',
-      phone_number: this.Form.value.phone_number,
-      salary: this.Form.value.salary,
-      dept_id: this.Form.value.department
-    }
-
-    this.employees.addNewEmp(user).subscribe({
-      next:data =>{
-        this.loading = true;
-        this.productDialog = false;
-        
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Employee Added', life: 3000})
-        this.getEmp() 
-        this.loading = false;
-      },
-      error: err => {
-        this.loading = false;
-        this.messageService.add({severity:'error', summary: 'Error', detail: err.error.message, life: 3000}) 
-      }
-    }) 
-  }
-
+  //get all employees on the database
   getEmp(){
     return this.employees.getEmployees().subscribe({
       next:data =>{
@@ -147,6 +106,7 @@ export class EmployeesComponent implements OnInit {
         this.loading = true;
         this.employees.moveEmpToOldEmp(user, details).subscribe();
         this.employees.deleteEmpByID(details).subscribe();
+        this.route.navigate(['/dash/employees']);
         this.getEmp();
         this.loading = false;
         this.messageService.add({severity:'success', summary: 'Successful', detail: 'Employee Deleted', life: 3000})
@@ -158,49 +118,93 @@ export class EmployeesComponent implements OnInit {
     })
   }
 
+  //Keeps the modal hidden at all times
   hideDialog() {
     this.productDialog = false;
+    this.submitted = false;
   }
+
+
   get f():{ [key: string]: AbstractControl }{
     return this.Form.controls;//it traps errors in the form
-  }  
+  } 
 
+  //Open a modal
+  openNew(){
+    //pass the datatypes in the modal class to modal
+    this.empList = {}
+    this.submitted = false;
+    this.productDialog = true;
 
-
-
-
-
-
-
-
-
-  updateEmp(detail:Empid){
-    this.submitted = true;
-    console.log(detail)
-    if(this.Form.invalid)
-    { 
-      this.loading = false;
-      return
-    }
-
-    let user = { //register a new employee
-      phone_number: this.emplist.phone_number,
-      salary: this.emplist.salary,
-      dept_id: this.emplist.dept_id
-    }
-
-
-
-    // this.employees.updateEmpDetails(user, 1).subscribe({
-    //   next:data => {
-
-    //   },
-    //   error: err => {
-    //     this.loading = false;
-    //     this.messageService.add({severity:'error', summary: 'Error', detail: err.error.message, life: 3000}) 
-    //   }
-    // })
+    //Reset form every time you insert data
+    this.Form.reset();
   }
 
+  //Edit data from modal
+  editProduct(empList: Update) {
+    this.empList = {...empList};
+    //Open the modal
+    this.productDialog = true;
+  }
 
+  saveEmployee(){
+    this.submitted = true;
+    if (this.empList.emp_id){
+      //pass data that needs to be updated as an object to user variable
+      let user = {
+          phone_number: this.empList.phone_number,
+          salary: this.empList.salary,
+          dept_id: this.empList.dept_id   
+      }
+      //Subscribe to a service that uses a patch to update infor
+
+      this.employees.updateEmpDetails(user, this.empList.emp_id).subscribe({
+        next:data =>{
+          this.loading = true;
+          this.loading = false;
+          //Route back to employees this helps in refreshing data
+          this.route.navigate(['/dash/employees']);
+
+          //Close dialog modal
+          this.productDialog = false;
+          //Display a message if successful
+
+          this.messageService.add({severity:'success', summary: 'Success', detail:  'Employee Updated successfully', life: 3000});
+        },error: err => {
+          this.loading = false;
+          //display an error message coming from backend if it failed to update
+          this.messageService.add({severity:'error', summary: 'Error', detail:  err.error.message, life: 3000});
+        }
+      });
+    }else{
+      //pass data that needs to be data will be inserted in a the database as an object to newEmployees variable
+      let newEmployees = { 
+        first_name: this.empList.first_name,
+        last_name: this.empList.last_name,
+        email: this.transform(this.empList.first_name) +"."+ this.transform(this.empList.last_name) +"@zoho.com",
+        phone_number: this.empList.phone_number,
+        salary: this.empList.salary,
+        dept_id:this.empList.dept_id,
+      }
+      this.employees.addNewEmp(newEmployees).subscribe({
+        next:data =>{
+          this.loading = true;
+          this.productDialog = false;
+          
+          this.messageService.add({severity:'success', summary: 'Successful', detail: 'Employee Added', life: 3000})
+          this.getEmp() 
+          this.loading = false;
+        },
+        error: err => {
+          this.loading = false;
+          this.messageService.add({severity:'error', summary: 'Error', detail: err.error.message, life: 3000}) 
+        }
+      }) 
+    }
+  }
+
+  transform(value:any): string {
+    let first = value.toLowerCase();
+    return first; 
+  }
 }

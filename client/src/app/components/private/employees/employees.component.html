@@ -9,7 +9,7 @@
             </div>
             <div class="form-control mt-5">
                 <div class="box">
-                    <input type="text"  [(ngModel)]="term"  placeholder="Search…" class="input input-bordered max-w-s" />
+                    <input type="text"  placeholder="Search…" class="input input-bordered max-w-s" />
                   <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success float-right mr-2" (click)="openNew()"></button>
                 </div>
             </div>
@@ -19,18 +19,18 @@
                 
                 <thead class="text-xs text-gray-50 uppercase bg-sky-800 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" style="" class=" py-3 px-6">First Name</th>
-                        <th scope="col" style="" class=" py-3 px-6">Last Name</th>
-                        <th scope="col" style="" class=" py-3 px-6">Email</th>
-                        <th scope="col" style="" class=" py-3 px-6">Phone Number</th>
-                        <th scope="col" style="" class=" py-3 px-6">Hire Date</th>
-                        <th scope="col" style="" class=" py-3 px-6">Salary</th>
-                        <th scope="col" style="" class=" py-3 px-6">Department</th>
-                        <th scope="col" style="" class=" py-3 px-6">Action</th>
+                        <th scope="col" class=" py-3 px-6">First Name</th>
+                        <th scope="col" class=" py-3 px-6">Last Name</th>
+                        <th scope="col" class=" py-3 px-6">Email</th>
+                        <th scope="col" class=" py-3 px-6">Phone Number</th>
+                        <th scope="col" class=" py-3 px-6">Hire Date</th>
+                        <th scope="col" class=" py-3 px-6">Salary</th>
+                        <th scope="col" class=" py-3 px-6">Department</th>
+                        <th scope="col" class=" py-3 px-6">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let i of emp | filter: term" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"> 
+                    <tr *ngFor="let i of emp " class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"> 
                         <th class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{i.first_name }}</th>
                         <td class="py-4 px-6" >{{i.last_name }}</td>
@@ -40,7 +40,7 @@
                         <td class="py-4 px-6">{{i.salary }}</td>
                         <td class="py-4 px-6">{{i.dept_name }}</td>
                         <td>
-                            <button pButton pRipple icon="pi pi-pencil" (click)="updateEmp(i.emp_id)" class="p-button-rounded p-button-primary" ></button>
+                            <button pButton pRipple icon="pi pi-pencil"  (click)="editProduct(i)" class="p-button-rounded p-button-primary" ></button>
                             <button pButton pRipple icon="pi pi-trash" (click)="deleteProduct(i)" class="p-button-rounded p-button-danger" ></button>
                         </td>
                     </tr>
@@ -97,55 +97,49 @@
 </div>
 
 
-<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="New Employee" [modal]="true" styleClass="p-fluid">
-   <form [formGroup]="Form">
+<p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Employee Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="form-group col mb-4">
+            <label  class="label"><span class="label-text">First Name</span></label>
+            <input (keypress)="keyPressAlphanumeric($event)" type="text" pInputText id="fname" [(ngModel)]="empList.first_name" placeholder="First Name" class="input input-bordered w-full max-w-s fname "
+            [ngClass] ="{ 'is-invalid':submitted && f['fname'].errors }" />
+            <!-- <div *ngIf="submitted && f['fname'].errors" class="invalid-feedback">
+                <div *ngIf="f['fname'].errors['required']">First name is required</div>
+            </div> -->
+        </div>
 
-        <div class="row">
-            <div class="form-group col mb-4">
-                <label class="label"><span class="label-text">First Name</span></label>
-                <input (keypress)="keyPressAlphanumeric($event)" type="text" formControlName="fname" placeholder="First Name"
-                    class="input input-bordered w-full max-w-s fname "
-                    [ngClass] ="{ 'is-invalid':submitted && f['fname'].errors }" />
-                <div *ngIf="submitted && f['fname'].errors" class="invalid-feedback">
-                    <div *ngIf="f['fname'].errors['required']">First name is required</div>
-                </div>
-            </div>
-
-            <div class="form-group col mb-4">
-                <label (keypress)="keyPressAlphanumeric($event)" class="label"><span class="label-text">Last Name</span></label>
-                <input type="text" formControlName="lname" placeholder="Last Name"
-                    class="input input-bordered w-full max-w-s lname "
-                    [ngClass] ="{ 'is-invalid':submitted && f['lname'].errors }" />
-                <div *ngIf="submitted && f['lname'].errors" class="invalid-feedback">
-                    <div *ngIf="f['lname'].errors['required']">Last name is required</div>
-                </div>
-            </div>
+        <div class="form-group col mb-4">
+            <label class="label"><span class="label-text">Last Name</span></label>
+            <input type="text" (keypress)="keyPressAlphanumeric($event)" [(ngModel)]="empList.last_name" placeholder="Last Name" class="input input-bordered w-full max-w-s lname "
+            [ngClass] ="{ 'is-invalid':submitted && f['lname'].errors }" />
+            <!-- <div *ngIf="submitted && f['lname'].errors" class="invalid-feedback">
+                <div *ngIf="f['lname'].errors['required']">Last name is required</div>
+            </div> -->
         </div>
 
         <div class="form-group col mb-4 ">
             <label class="label"><span class="label-text">Phone Number</span></label>
-            <input type="tel"   formControlName="phone_number" placeholder="Phone Number"
+            <input type="tel"  placeholder="Phone Number" [(ngModel)]="empList.phone_number"
                 class="input input-bordered w-full max-w-s phone_number "
                 [ngClass] ="{ 'is-invalid':submitted && f['phone_number'].errors }" />
-            <div *ngIf="submitted && f['phone_number'].errors" class="invalid-feedback">
+            <!-- <div *ngIf="submitted && f['phone_number'].errors" class="invalid-feedback">
                 <div *ngIf="f['phone_number'].errors['required']">Phone Number is required</div>
-            </div>
+            </div> -->
         </div>
         
         <div class="form-group col mb-4">
             <label class="label"><span class="label-text">Salary</span></label>
-            <input type="number" min="0" max="100000" step="1" formControlName="salary" placeholder="Salary"
-                class="input input-bordered w-full max-w-s salary "
+            <input type="number" min="0" max="100000" step="1"   placeholder="R10000"
+                class="input input-bordered w-full max-w-s salary " [(ngModel)]="empList.salary" 
                 [ngClass] ="{ 'is-invalid':submitted && f['salary'].errors }" />
-            <div *ngIf="submitted && f['salary'].errors" class="invalid-feedback">
+            <!-- <div *ngIf="submitted && f['salary'].errors" class="invalid-feedback">
                 <div *ngIf="f['salary'].errors['required']">Salary is required</div>
-            </div>
+            </div> -->
         </div>
 
         <div class="form-group col mb-4">
             <label class="label"><span class="label-text">Department</span></label>
-            <select formControlName="department" class="input input-bordered w-full max-w-s department " placeholder="Select Role"
-                [ngClass] ="{ 'is-invalid':submitted && f['department'].errors }" >
+            <select  class="input input-bordered w-full max-w-s department" [(ngModel)]="empList.dept_id" placeholder="Select Role.." [ngClass] ="{ 'is-invalid':submitted && f['department'].errors }" >
               <option value disabled selected hidden>Select Role...</option>
               <option value="1">Administration</option>
               <option value="2">Marketing</option>
@@ -153,16 +147,17 @@
               <option value="4">IT Department</option>
               <option value="5">Human Resource</option>
             </select>
-            <div *ngIf="submitted && f['department'].errors" class="invalid-feedback">
+            <!-- <div *ngIf="submitted && f['department'].errors" class="invalid-feedback">
                 <div *ngIf="f['department'].errors['required']">Department is required</div>
-            </div>
+            </div> -->
         </div>
-        
-        <div class="float-right">
-            <a type="button" class="btn btn-danger" (click)="hideDialog()"><i class="pi pi-times">  Cancel</i></a>
-            <a type="button" class="btn btn-primary" (click)="saveData()"><i class="pi pi-check">  Save</i></a>
-        </div>
-    </form>
+
+    </ng-template>
+    
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" (click)="hideDialog()" icon="pi pi-times" class="p-button-text" ></button>
+        <button pButton pRipple label="Save" (click)="saveEmployee()" icon="pi pi-check" class="p-button-text" ></button>
+    </ng-template>
 </p-dialog>
 
 
