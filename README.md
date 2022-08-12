@@ -1,5 +1,5 @@
-# HR Management System
-HR Management system is a platform  created by for keeping records of employees in a company 
+# Employee Record System
+Employee Record System is a platform  created by for keeping records of employees in a company 
 
 backend third-party packages installed using npm i: bcrypt, body-parser, cors, dotenv, express, jsonwebtoken, jwt-decode, nodemailer, rand-token, pg
 
