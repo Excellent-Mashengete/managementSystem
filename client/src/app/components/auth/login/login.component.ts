@@ -40,6 +40,8 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]],
     });
   }
+
+  
   
   get f():{ [key: string]: AbstractControl }{
     return this.Form.controls;//it traps errors in the form

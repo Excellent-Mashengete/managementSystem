@@ -1,89 +1,38 @@
  <p-toast></p-toast>
 <p-confirmDialog [style]="{width: '450px'}" header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
-<div style="margin-top:5vh;"class="container text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-    <div class="flex justify-center">
-       
-        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-            <div class="p-5 max-w-21 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                Current Employee List
-            </div>
-            <div class="form-control mt-5">
-                <div class="box">
-                    <input type="text"  placeholder="Search…" class="input input-bordered max-w-s" />
-                  <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success float-right mr-2" (click)="openNew()"></button>
+
+<div class="overflow-x-auto relative  sm:rounded-lg">
+    <div class="p-5 max-w-21 text-lg font-semibold text-left text-gray-900 ">
+        Current Employee List
+     </div>
+        
+    <div class="form-control mt-5">    
+        <div class="box">
+            <input type="text"  [(ngModel)]="term" placeholder="Search…" class="input input-bordered max-w-s" />
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success float-right mr-2" (click)="openNew()"></button>
+        </div>
+    </div>
+</div>
+
+<div class="container justify-center" style="margin-top:5vh;">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6" >
+        <div class="card card-side bg-base-100 shadow-xl" *ngFor="let i of emp | filter: term">
+            <figure><img src="https://placeimg.com/200/280/arch" alt="User"></figure>
+            <div class="flex justify-end">
+                <div class="card-body">
+                    <h4 class="card-title"> {{i.first_name }} {{i.last_name }}</h4>
+                    <p>{{i.email }}</p>
+                    <p>Contacts: {{i.phone_number }}</p>
+                    <p>Start: {{i.hiredate | date: 'dd MMM YYYY'}}</p>
+                    <p>Salary: R{{i.salary }}</p>
+                    <p>Department: {{i.dept_name }}</p>
+                    <div class="card-actions ">
+                        <button pButton pRipple icon="pi pi-eye"  (click)="editProduct(i)" class="p-button-rounded p-button-primary" ></button>
+                        <button pButton pRipple icon="pi pi-pencil"  (click)="editProduct(i)" class="p-button-rounded p-button-warning" ></button>
+                        <button pButton pRipple icon="pi pi-trash" (click)="deleteProduct(i)" class="p-button-rounded p-button-danger" ></button>
+                    </div>
                 </div>
             </div>
-
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-5">
-                
-                
-                <thead class="text-xs text-gray-50 uppercase bg-sky-800 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class=" py-3 px-6">First Name</th>
-                        <th scope="col" class=" py-3 px-6">Last Name</th>
-                        <th scope="col" class=" py-3 px-6">Email</th>
-                        <th scope="col" class=" py-3 px-6">Phone Number</th>
-                        <th scope="col" class=" py-3 px-6">Hire Date</th>
-                        <th scope="col" class=" py-3 px-6">Salary</th>
-                        <th scope="col" class=" py-3 px-6">Department</th>
-                        <th scope="col" class=" py-3 px-6">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let i of emp " class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"> 
-                        <th class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{i.first_name }}</th>
-                        <td class="py-4 px-6" >{{i.last_name }}</td>
-                        <td class="py-4 px-6">{{i.email }}</td>
-                        <td class="py-4 px-6">{{i.phone_number }}</td>
-                        <td class="py-4 px-6">{{i.hiredate | date: 'dd MMM YYYY'}}</td>
-                        <td class="py-4 px-6">{{i.salary }}</td>
-                        <td class="py-4 px-6">{{i.dept_name }}</td>
-                        <td>
-                            <button pButton pRipple icon="pi pi-pencil"  (click)="editProduct(i)" class="p-button-rounded p-button-primary" ></button>
-                            <button pButton pRipple icon="pi pi-trash" (click)="deleteProduct(i)" class="p-button-rounded p-button-danger" ></button>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot >
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th  scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            Total: {{ this.totalNumber}} employees.</th>
-                    </tr>
-                </tfoot>
-            </table>
-           <!-- <nav class="flex justify-between items-center pt-4" aria-label="Table navigation">
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span class="font-semibold text-gray-900 dark:text-white">1000</span></span>
-                <ul class="inline-flex items-center -space-x-px">
-                    <li>
-                        <a href="#" class="block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            <span class="sr-only">Previous</span>
-                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                    </li>
-                    <li>
-                        <a  class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                    </li>
-                    <li>
-                        <a aria-current="page" class="z-10 py-2 px-3 leading-tight text-blue-600 bg-blue-50 border border-blue-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                    </li>
-                    <li>
-                        <a class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
-                    </li>
-                    <li>
-                        <a  class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">100</a>
-                    </li>
-                    <li>
-                        <a class="block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                            <span class="sr-only">Next</span>
-                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                        </a>
-                    </li>
-                </ul>
-            </nav> -->
         </div>
     </div>
     <ngx-loading
@@ -96,68 +45,55 @@
     </ngx-loading>
 </div>
 
-
 <p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Employee Details" [modal]="true" styleClass="p-fluid">
-    <ng-template pTemplate="content">
-        <div class="form-group col mb-4">
-            <label  class="label"><span class="label-text">First Name</span></label>
-            <input (keypress)="keyPressAlphanumeric($event)" type="text" pInputText id="fname" [(ngModel)]="empList.first_name" placeholder="First Name" class="input input-bordered w-full max-w-s fname "
-            [ngClass] ="{ 'is-invalid':submitted && f['fname'].errors }" />
-            <!-- <div *ngIf="submitted && f['fname'].errors" class="invalid-feedback">
-                <div *ngIf="f['fname'].errors['required']">First name is required</div>
-            </div> -->
-        </div>
 
-        <div class="form-group col mb-4">
-            <label class="label"><span class="label-text">Last Name</span></label>
-            <input type="text" (keypress)="keyPressAlphanumeric($event)" [(ngModel)]="empList.last_name" placeholder="Last Name" class="input input-bordered w-full max-w-s lname "
-            [ngClass] ="{ 'is-invalid':submitted && f['lname'].errors }" />
-            <!-- <div *ngIf="submitted && f['lname'].errors" class="invalid-feedback">
-                <div *ngIf="f['lname'].errors['required']">Last name is required</div>
-            </div> -->
-        </div>
+        <ng-template pTemplate="content">
+            <div class="field col mb-2">
+                <label class="label"><span class="label-text">First Name</span></label>
+                <input (keypress)="keyPressAlphanumeric($event)"  placeholder="First Name" type="text" pInputText id="first_name" [(ngModel)]="empList.first_name" class="input input-bordered w-full max-w-s first_name " required autofocus />
+                <small class="invalid-feedback" *ngIf="submitted && !empList.first_name">First Name is required.</small>
+            </div>
 
-        <div class="form-group col mb-4 ">
-            <label class="label"><span class="label-text">Phone Number</span></label>
-            <input type="tel"  placeholder="Phone Number" [(ngModel)]="empList.phone_number"
-                class="input input-bordered w-full max-w-s phone_number "
-                [ngClass] ="{ 'is-invalid':submitted && f['phone_number'].errors }" />
-            <!-- <div *ngIf="submitted && f['phone_number'].errors" class="invalid-feedback">
-                <div *ngIf="f['phone_number'].errors['required']">Phone Number is required</div>
-            </div> -->
-        </div>
-        
-        <div class="form-group col mb-4">
-            <label class="label"><span class="label-text">Salary</span></label>
-            <input type="number" min="0" max="100000" step="1"   placeholder="R10000"
-                class="input input-bordered w-full max-w-s salary " [(ngModel)]="empList.salary" 
-                [ngClass] ="{ 'is-invalid':submitted && f['salary'].errors }" />
-            <!-- <div *ngIf="submitted && f['salary'].errors" class="invalid-feedback">
-                <div *ngIf="f['salary'].errors['required']">Salary is required</div>
-            </div> -->
-        </div>
+            <div class="field col mb-2">
+                <label class="label"><span class="label-text">Last Name</span></label>
+                <input (keypress)="keyPressAlphanumeric($event)" type="text" placeholder="Last Name" pInputText id="last_name" [(ngModel)]="empList.last_name" class="input input-bordered w-full max-w-s last_name " required autofocus />
+                <small class="invalid-feedback" *ngIf="submitted && !empList.last_name">Last Name is required.</small>
+            </div>
 
-        <div class="form-group col mb-4">
-            <label class="label"><span class="label-text">Department</span></label>
-            <select  class="input input-bordered w-full max-w-s department" [(ngModel)]="empList.dept_id" placeholder="Select Role.." [ngClass] ="{ 'is-invalid':submitted && f['department'].errors }" >
-              <option value disabled selected hidden>Select Role...</option>
-              <option value="1">Administration</option>
-              <option value="2">Marketing</option>
-              <option value="3">Finance</option>
-              <option value="4">IT Department</option>
-              <option value="5">Human Resource</option>
-            </select>
-            <!-- <div *ngIf="submitted && f['department'].errors" class="invalid-feedback">
-                <div *ngIf="f['department'].errors['required']">Department is required</div>
-            </div> -->
-        </div>
-
-    </ng-template>
-    
-    <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" (click)="hideDialog()" icon="pi pi-times" class="p-button-text" ></button>
-        <button pButton pRipple label="Save" (click)="saveEmployee()" icon="pi pi-check" class="p-button-text" ></button>
-    </ng-template>
-</p-dialog>
+            <div class="field col mb-2">
+                <label class="label"><span class="label-text">Phone Number</span></label>
+                <p-inputMask mask="(999) 999-9999" [(ngModel)]="empList.phone_number" placeholder="(999) 999-9999"></p-inputMask>
+                <small class="invalid-feedback" *ngIf="submitted && !empList.phone_number">Phone Number is required.</small>
+            </div>
 
 
+            <div class="field col mb-2">
+                <label class="label"><span class="label-text">Salary</span></label>
+                <p-inputNumber id="price" [(ngModel)]="empList.salary" placeholder="Salary" mode="currency" currency="ZAR" locale="en-SA"></p-inputNumber>
+                <small class="invalid-feedback" *ngIf="submitted && !empList.salary">Salary is required.</small>
+            </div>
+
+            <div class="field col mb-2">
+                <label class="label"><span class="label-text">Department</span></label>
+                <select [(ngModel)]="empList.dept_id" class="input input-bordered w-full max-w-s department " placeholder="Select department">
+                <option value disabled selected hidden>Select Role...</option>
+                <option value="1">Administration</option>
+                <option value="2">Marketing</option>
+                <option value="3">Finance</option>
+                <option value="4">IT Department</option>
+                <option value="5">Human Resource</option>
+                </select>
+                <small class="invalid-feedback" *ngIf="submitted && !empList.dept_id">Department is required.</small>
+            </div>
+
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" (click)="hideDialog()" icon="pi pi-times" class="p-button-text" ></button>
+            <button pButton pRipple label="Save" (click)="saveEmployee()" icon="pi pi-check" class="p-button-text" ></button>
+        </ng-template>
+</p-dialog> 
+
+
+
+ 

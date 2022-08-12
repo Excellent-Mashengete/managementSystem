@@ -9,6 +9,7 @@ import { EmployeesService } from '../service/employees.service';
 import { Employees } from 'src/app/interfaces/employees';
 import { Update } from 'src/app/models/update.models';
 import { Router } from '@angular/router';
+import {InputTextModule} from 'primeng/inputtext';
 
 @Component({
   selector: 'app-employees',
@@ -29,7 +30,6 @@ export class EmployeesComponent implements OnInit {
   productDialog: boolean = false;
   submitted = false;
   term = '';
-
   constructor(
     private formBuilder: FormBuilder,
     private messageService: MessageService,  
@@ -37,15 +37,7 @@ export class EmployeesComponent implements OnInit {
     private employees:EmployeesService,
     private route:Router) { }
   
-  Form = new FormGroup({
-    fname: new FormControl(''),
-    lname: new FormControl(''),
-    phone_number: new FormControl(''),
-    salary: new FormControl(''),
-    department: new FormControl(''),
-  });
-  
-  
+
   keyPressAlphanumeric(event: { keyCode: number; preventDefault: () => void; }) {
 
     var inp = String.fromCharCode(event.keyCode);
@@ -60,14 +52,6 @@ export class EmployeesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.Form = this.formBuilder.group({
-      fname: ['', Validators.required],
-      lname: ['', Validators.required],
-      phone_number: ['', [Validators.required, Validators.maxLength(15)]],
-      salary: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]],
-      department: ['', Validators.required]
-    })
-
     this.getEmp()
   }
 
@@ -105,8 +89,12 @@ export class EmployeesComponent implements OnInit {
         }
         this.loading = true;
         this.employees.moveEmpToOldEmp(user, details).subscribe();
-        this.employees.deleteEmpByID(details).subscribe();
-        this.route.navigate(['/dash/employees']);
+        this.employees.deleteEmpByID(details).subscribe({
+          next:data =>{
+            this.route.navigate(['/dash/employees']);
+          }
+        });
+        
         this.getEmp();
         this.loading = false;
         this.messageService.add({severity:'success', summary: 'Successful', detail: 'Employee Deleted', life: 3000})
@@ -124,11 +112,6 @@ export class EmployeesComponent implements OnInit {
     this.submitted = false;
   }
 
-
-  get f():{ [key: string]: AbstractControl }{
-    return this.Form.controls;//it traps errors in the form
-  } 
-
   //Open a modal
   openNew(){
     //pass the datatypes in the modal class to modal
@@ -137,7 +120,7 @@ export class EmployeesComponent implements OnInit {
     this.productDialog = true;
 
     //Reset form every time you insert data
-    this.Form.reset();
+
   }
 
   //Edit data from modal
@@ -161,7 +144,6 @@ export class EmployeesComponent implements OnInit {
       this.employees.updateEmpDetails(user, this.empList.emp_id).subscribe({
         next:data =>{
           this.loading = true;
-          this.loading = false;
           //Route back to employees this helps in refreshing data
           this.route.navigate(['/dash/employees']);
 
@@ -186,11 +168,12 @@ export class EmployeesComponent implements OnInit {
         salary: this.empList.salary,
         dept_id:this.empList.dept_id,
       }
+
       this.employees.addNewEmp(newEmployees).subscribe({
         next:data =>{
           this.loading = true;
+          this.route.navigate(['/dash/employees']);
           this.productDialog = false;
-          
           this.messageService.add({severity:'success', summary: 'Successful', detail: 'Employee Added', life: 3000})
           this.getEmp() 
           this.loading = false;
