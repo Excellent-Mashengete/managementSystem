@@ -51,9 +51,13 @@ module.exports.oldEmployees = async (req, res) => {
     try {
         client.query(`
         SELECT emp_id, first_name, last_name, email, phone_number, hiredate,
-        enddate, DATE_PART('year', enddate::date)-DATE_PART('year', hiredate::date) as years ,a.dept_id, a.dept_name
+        enddate, 
+        DATE_PART('year', enddate::date)-DATE_PART('year', hiredate::date) as years,
+        (DATE_PART('year', enddate::date) - DATE_PART('year', hiredate::date)) * 12 +
+        (DATE_PART('month', enddate::date) - DATE_PART('month', hiredate::date)) as months,
+        a.dept_id, a.dept_name
         FROM oldemployees e 
-        INNER JOIN Department a ON e.dept_id = a.dept_id ORDER BY e.first_name`, (error, results) =>{ //returns all employess list in the database from Employees and ascending order
+        INNER JOIN Department a ON e.dept_id = a.dept_id ORDER BY e.first_name;`, (error, results) =>{ //returns all employess list in the database from Employees and ascending order
             if(error){ //checks for errors and return them 
                 return res.status(400).json({
                     error: "Database error"
