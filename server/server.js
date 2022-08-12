@@ -6,8 +6,7 @@ require('./App/Config/dotenv.config')
 var corsOptions = {
   origin: ["https://employeesystem.netlify.app", "http://localhost:4200"],
   credentials: true
-};// only allow that listerning address to connnect to the database
-
+};// only allow the listerning addresses to connnect to the backend
 
 app.use(express.json());  // to support JSON-encoded
 app.use(cors(corsOptions));
@@ -33,7 +32,7 @@ client.connect((err) =>{ // Connect to the Database
 const auth = require("./App/Routes/authenticate");
 const emp = require("./App/Routes/employee");
 
-const port = process.env.PORT || 7070;
+const port = process.env.PORT || 7070; //create a listerning port number
 
 app.get("/", (req, res) =>{
     res.status(200).send("Welcome to Excellent server");

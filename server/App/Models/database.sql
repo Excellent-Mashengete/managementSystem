@@ -59,4 +59,5 @@ CREATE TABLE oldemployees (
     salary decimal(8,2),
     dept_id int,
     FOREIGN KEY(dept_id) REFERENCES Department(dept_id)
+
 );
