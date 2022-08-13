@@ -13,6 +13,7 @@ export class EmployeesService {
   baseUrl = environment.baseUrl;
   constructor(private http: HttpClient,private router: Router) { }
   
+
   getEmployees():Observable<any>{
     return this.http.get(`${this.baseUrl}emplist`)
   }

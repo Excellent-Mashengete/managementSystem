@@ -93,7 +93,6 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/dash'])
 
         //call user the getprofile function pass the token as an argument
-        this.auth.getUserProfile(this.userToken.token)
       },
       error: err => {
         this.loading = false;

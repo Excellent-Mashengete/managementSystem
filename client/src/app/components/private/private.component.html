@@ -20,6 +20,11 @@
         <ul  class="menu p-4 overflow-y-auto w-80 bg-sky-800 ">
             <!-- Sidebar content here  style="background-color: #053C5E" -->
             <li><a routerLink="/dash" (click)="loading = !loading" class="btn btn-ghost normal-case text-xl" id="logo">EMPLOYEE RECORD SYSTEM</a></li>
+            
+            <div class="p-4 mt-4">
+                <h4>{{name}}</h4>
+                <h6>{{email}}</h6>
+            </div>
             <div class="divider" style="color:black;"></div> 
             <li><i class="pi pi-home"><a (click)="loading = !loading" routerLink="/dash/home">Dashboard</a></i></li>
             <li><i class="pi pi-check" ><a (click)="loading = !loading" routerLink="/dash/employees">Current Employees</a></i></li>

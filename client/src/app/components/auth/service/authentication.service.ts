@@ -5,7 +5,10 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { Login } from 'src/app/interfaces/login';
 import { Register } from 'src/app/interfaces/register';
 import { environment } from 'src/environments/environment';
-
+const authToken = localStorage.getItem('access_token');
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'token': `${authToken}` })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +17,6 @@ export class AuthenticationService {
   baseUrl = environment.baseUrl;
   constructor(private http: HttpClient,private router: Router) { }
   
-  currentUser: any  = {};
-  name : string = '';
-  email : string = '';
-
-
   //create a login request using 
   login(users : Login) {
     return this.http.post(`${this.baseUrl}login`, users)
@@ -45,23 +43,7 @@ export class AuthenticationService {
 
   //create a get request for current logged in user
   //pass the token back to the backend to be decoded in order to receive current logged in user
-  getUserProfile(token: any){
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'token': `${token}` })
-    };
-
-    return this.http.get(`${this.baseUrl}profile`,httpOptions).subscribe({
-      next:userinfor => {
-        this.currentUser = userinfor;
-        this.name = this.transform(this.currentUser.decoded.fname) +" "+ this.transform(this.currentUser.decoded.lname);
-        this.email = this.currentUser.decoded.email;
-      }
-    })
-  }
-
-  //Transorm the first letter in to an Uppercase
-  transform(value:string): string {
-    let first = value.substr(0,1).toUpperCase();
-    return first + value.substr(1); 
+  getUserProfile():Observable<any>{
+    return this.http.get(`${this.baseUrl}profile`,httpOptions)
   }
 }

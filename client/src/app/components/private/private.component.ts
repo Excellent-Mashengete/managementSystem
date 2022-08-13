@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Route, Router } from '@angular/router';
 import { AuthenticationService } from '../auth/service/authentication.service';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { NgxLoadingComponent } from 'ngx-loading';
+import { EmployeesService } from './service/employees.service';
 
 @Component({
   selector: 'app-private',
@@ -17,21 +18,35 @@ export class PrivateComponent implements OnInit {
   public loading = false;
 
 
+  currentUser: any  = {};
+  name : string = '';
+  email : string = '';
   term = '';
-  constructor( public auth:AuthenticationService,
-    private router: Router) { }
+  constructor( public auth:AuthenticationService) { }
 
   ngOnInit(): void {
     this.loading = true;
-    this.getusername();
-    console.log(this.getusername())
+    this.getUserInfor();
   }
 
   Logout(){
     this.auth.doLogout()
   }
 
-  getusername(){
-    return this.auth.email;
+  getUserInfor(){
+    return this.auth.getUserProfile().subscribe({
+      next:userinfor => {
+        this.currentUser = userinfor;
+        this.name = this.transform(this.currentUser.decoded.fname) +" "+ this.transform(this.currentUser.decoded.lname);
+        this.email = this.currentUser.decoded.email;
+  
+      }
+    })
+  }
+
+    //Transorm the first letter in to an Uppercase
+  transform(value:string): string {
+    let first = value.substr(0,1).toUpperCase();
+    return first + value.substr(1); 
   }
 }
