@@ -18,7 +18,6 @@ export class LoggedGuard implements CanActivate {
       
       //if user is logged in (true) prevent them from routing back to login and register
       if (this.authService.isLoggedIn == true) {
-        window.alert("User already login");
         this.router.navigate(['/dash'])
       }
       return true;
