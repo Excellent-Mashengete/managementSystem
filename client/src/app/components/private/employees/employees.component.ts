@@ -148,9 +148,10 @@ export class EmployeesComponent implements OnInit {
           this.route.navigate(['/dash/employees']);
 
           //Close dialog modal
+          
           this.productDialog = false;
           //Display a message if successful
-
+          this.loading = false;
           this.messageService.add({severity:'success', summary: 'Success', detail:  'Employee Updated successfully', life: 3000});
         },error: err => {
           this.loading = false;

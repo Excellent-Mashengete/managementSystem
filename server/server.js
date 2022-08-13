@@ -8,7 +8,6 @@ var corsOptions = {
   credentials: true
 };// only allow that listerning address to connnect to the database
 
-
 app.use(express.json());  // to support JSON-encoded
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));

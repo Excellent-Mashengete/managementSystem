@@ -23,10 +23,15 @@ export class PrivateComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.getusername();
+    console.log(this.getusername())
   }
 
   Logout(){
     this.auth.doLogout()
   }
 
+  getusername(){
+    return this.auth.email;
+  }
 }
