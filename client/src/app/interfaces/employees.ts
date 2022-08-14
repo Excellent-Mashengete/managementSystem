@@ -6,5 +6,6 @@ export interface Employees {
     phone_number:String;
     hiredate:Date;
     salary:Number;
-    dept_id:Number
+    dept_id:Number;
+    status:String;
 }

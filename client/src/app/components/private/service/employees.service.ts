@@ -38,7 +38,7 @@ export class EmployeesService {
     return this.http.post(`${this.baseUrl}add_new`, emps)
   }
 
-  updateEmpDetails(user:any, id:any){
+  updateEmpDetails(user:any, id:number): Observable<any>{
     return this.http.patch(`${this.baseUrl}updateEmp/${id}`, user)
   }
 }

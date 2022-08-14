@@ -25,7 +25,7 @@
                     <p>Contacts: {{i.phone_number }}</p>
                     <p>Start: {{i.hiredate | date: 'dd MMM YYYY'}}</p>
                     <p>Salary: R{{i.salary }}</p>
-                    <p>Department: {{i.dept_name }}</p>
+                    <p>Job Type: {{i.dept_name }}</p>
                     <div class="card-actions ">
                         <button pButton pRipple icon="pi pi-eye"  (click)="editProduct(i)" class="p-button-rounded p-button-primary" ></button>
                         <button pButton pRipple icon="pi pi-pencil"  (click)="editProduct(i)" class="p-button-rounded p-button-warning" ></button>
@@ -74,7 +74,7 @@
             </div>
 
             <div class="field col mb-2">
-                <label class="label"><span class="label-text">Department</span></label>
+                <label class="label"><span class="label-text">Job Type</span></label>
                 <select [(ngModel)]="empList.dept_id" class="input input-bordered w-full max-w-s department " placeholder="Select department">
                 <option value disabled selected hidden>Select Role...</option>
                 <option value="1">Administration</option>
@@ -83,7 +83,7 @@
                 <option value="4">IT Department</option>
                 <option value="5">Human Resource</option>
                 </select>
-                <small class="invalid-feedback" *ngIf="submitted && !empList.dept_id">Department is required.</small>
+                <small class="invalid-feedback" *ngIf="submitted && !empList.dept_id">Job Type is required.</small>
             </div>
 
         </ng-template>

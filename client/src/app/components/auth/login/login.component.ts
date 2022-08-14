@@ -56,7 +56,8 @@ export class LoginComponent implements OnInit {
       return
     }
     let user = {
-      email: this.Form.value.email,
+      //convert the email entered to lowercase even if it is written in uppercase
+      email: this.transform(this.Form.value.email),
       password: this.Form.value.password
     }
     this.auth.login(user).subscribe({
@@ -79,5 +80,10 @@ export class LoginComponent implements OnInit {
         
       }
     })    
+  }
+
+  transform(value:any): string {
+    let first = value.toLowerCase();
+    return first; 
   }
 }

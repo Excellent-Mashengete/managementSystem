@@ -5,5 +5,6 @@ export class Update {
     email?: String;
     phone_number?:String;
     salary?:Number;
-    dept_id?:Number
+    dept_id?:Number;
+    status?: string;
 }

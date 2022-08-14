@@ -35,6 +35,7 @@ CREATE TABLE Employees (
     hiredate TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     salary decimal(8,2),
     dept_id int,
+    status VARCHAR(20);
     FOREIGN KEY(dept_id) REFERENCES Department(dept_id)
 );
 
@@ -58,5 +59,6 @@ CREATE TABLE oldemployees (
     enddate TIMESTAMPTZ NOT NULL DEFAULT now(),
     salary decimal(8,2),
     dept_id int,
+    status VARCHAR(20);
     FOREIGN KEY(dept_id) REFERENCES Department(dept_id)
 );

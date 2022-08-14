@@ -4,7 +4,7 @@ const client = require("../Config/db.config");
 module.exports.employees = async (req, res) => {
     try {
         client.query(`
-            SELECT emp_id, first_name, last_name, email, phone_number, hiredate, salary, a.dept_id, a.dept_name
+            SELECT emp_id, first_name, last_name, email, phone_number, hiredate, salary, status, a.dept_id, a.dept_name
             FROM Employees e
             INNER JOIN Department a ON e.dept_id = a.dept_id ORDER BY e.first_name ASC`, (error, results) =>{ //returns all employess list in the database from Employees and ascending order
             if(error){ //checks for errors and return them 
@@ -54,7 +54,7 @@ module.exports.oldEmployees = async (req, res) => {
         enddate, 
         DATE_PART('year', enddate::date)-DATE_PART('year', hiredate::date) as years,
         (DATE_PART('year', enddate::date) - DATE_PART('year', hiredate::date)) * 12 +
-        (DATE_PART('month', enddate::date) - DATE_PART('month', hiredate::date)) as months,
+        (DATE_PART('month', enddate::date) - DATE_PART('month', hiredate::date)) as months, status,
         a.dept_id, a.dept_name
         FROM oldemployees e 
         INNER JOIN Department a ON e.dept_id = a.dept_id ORDER BY e.first_name;`, (error, results) =>{ //returns all employess list in the database from Employees and ascending order
@@ -98,11 +98,12 @@ module.exports.DeletebyId = async (req,res) => {
 //Move employee table to oldemployee by ID
 module.exports.move_employee = async (req,res) => {
     const id = parseInt(req.params.emp_id)
-    const {first_name, last_name, email, phone_number, hiredate, salary, dept_id} = req.body
+    const {first_name, last_name, email, phone_number, hiredate, salary, dept_id, status} = req.body
     try {
         client.query(`    
-            INSERT INTO oldemployees(emp_id, first_name, last_name, email, phone_number, hiredate, salary, dept_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8)`,
-            [ id, first_name, last_name, email, phone_number, hiredate, salary, dept_id],
+            INSERT INTO oldemployees(emp_id, first_name, last_name, email, phone_number, hiredate, salary, dept_id, status)
+            VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [ id, first_name, last_name, email, phone_number, hiredate, salary, dept_id, status],
              (error, results)=>{ //delete the user we got using their id
             if(error){ //checks for errors and return them 
                 return res.status(400).json({
@@ -120,15 +121,14 @@ module.exports.move_employee = async (req,res) => {
      };
 }
 
-
 //Move employee table to oldemployee by ID
 module.exports.Add_New_Emp = async (req,res) => {
-    const {first_name, last_name, email, phone_number, salary, dept_id} = req.body
+    const {first_name, last_name, email, phone_number, salary, dept_id, status} = req.body
     try {
         client.query(`    
-            INSERT INTO employees(first_name, last_name, email, phone_number, salary, dept_id)
-            VALUES ($1, $2, $3, $4, $5, $6)`, 
-            [first_name,last_name,email, phone_number, salary, dept_id], (error, results)=>{ //Add new employee
+            INSERT INTO employees(first_name, last_name, email, phone_number, salary, dept_id, status)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)`, 
+            [first_name,last_name,email, phone_number, salary, dept_id, status], (error, results)=>{ //Add new employee
             if(error){ //checks for errors and return them 
                 return res.status(400).json({
                     message: "Unable to add new employee to the database"

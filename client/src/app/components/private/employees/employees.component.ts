@@ -31,17 +31,14 @@ export class EmployeesComponent implements OnInit {
   submitted = false;
   term = '';
   constructor(
-    private formBuilder: FormBuilder,
     private messageService: MessageService,  
     private confirmationService: ConfirmationService,
     private employees:EmployeesService,
     private route:Router) { }
   
-
+  //Prevent numbers from being entered on where string is only allowed e.g first_name and last_name
   keyPressAlphanumeric(event: { keyCode: number; preventDefault: () => void; }) {
-
     var inp = String.fromCharCode(event.keyCode);
-
     if (/[a-zA-Z]/.test(inp)) {
       return true;
     } else {
@@ -85,14 +82,15 @@ export class EmployeesComponent implements OnInit {
           phone_number:details.phone_number,
           hiredate:details.hiredate,
           salary:details.salary,
-          dept_id:details.dept_id
+          dept_id:details.dept_id,
+          status: 'Former'
         }
         this.loading = true;
         this.employees.moveEmpToOldEmp(user, details).subscribe();
         this.employees.deleteEmpByID(details).subscribe({
-          next:data =>{
-            this.route.navigate(['/dash/employees']);
-          }
+           next:data =>{
+             this.route.navigate(['/dash/employees']);
+           }
         });
         
         this.getEmp();
@@ -168,6 +166,7 @@ export class EmployeesComponent implements OnInit {
         phone_number: this.empList.phone_number,
         salary: this.empList.salary,
         dept_id:this.empList.dept_id,
+        status:'Former'
       }
 
       this.employees.addNewEmp(newEmployees).subscribe({

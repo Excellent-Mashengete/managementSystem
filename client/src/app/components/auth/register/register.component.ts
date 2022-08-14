@@ -79,7 +79,7 @@ export class RegisterComponent implements OnInit {
     let user = {//assign all entered values in the form to a variable user
       fname: this.Form.value.fname,
       lname: this.Form.value.lname,
-      email: this.Form.value.email,
+      email: this.transform(this.Form.value.email),
       password: this.Form.value.password
     }
 
@@ -101,5 +101,9 @@ export class RegisterComponent implements OnInit {
         });  
       }
     })
+  }
+  transform(value:any): string {
+    let first = value.toLowerCase();
+    return first; 
   }
 }

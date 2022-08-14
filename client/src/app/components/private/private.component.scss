@@ -2,10 +2,15 @@
     cursor: pointer;
 }
 ul a {
-   margin-left: 10px;
+    margin-left: 10px;
+    border: none;
+    color: white;
+    padding: 10px 0px 15px 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
 }
 ul li:hover{
-   
     text-decoration: underline;
 }
 .menu{
@@ -20,3 +25,4 @@ ul li:hover{
 #logo{
     margin-left: -12px;
 }
+

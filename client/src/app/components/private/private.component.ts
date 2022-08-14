@@ -39,6 +39,8 @@ export class PrivateComponent implements OnInit {
         this.currentUser = userinfor;
         this.name = this.transform(this.currentUser.decoded.fname) +" "+ this.transform(this.currentUser.decoded.lname);
         this.email = this.currentUser.decoded.email;
+        localStorage.setItem('email', this.email)
+        localStorage.setItem('name', this.name)
   
       }
     })

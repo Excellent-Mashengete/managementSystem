@@ -2,29 +2,28 @@
 <div class="overflow-x-auto relative  sm:rounded-lg">
   <div class="p-5 max-w-21 text-lg font-semibold text-left text-gray-900 ">
     Past Employee List
-  </div>
+   </div>
       
   <div class="form-control mt-5">    
-      <div class="box">
-          <input type="text"  [(ngModel)]="term" placeholder="Search…" class="input input-bordered max-w-s" />
-      </div>
+    <div class="box">
+      <input type="text"  [(ngModel)]="term" placeholder="Search…" class="input input-bordered max-w-s" />
+    </div>
   </div>
 </div>
 
-<div class="container justify-center" style="margin-top:5vh;">
+<div class="container mb-5 justify-center" style="margin-top:5vh;">
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6" >
-      <div class="card card-side bg-base-100 shadow-xl"*ngFor="let emps of employeeList | filter: term">
-          <figure><img src="../../../../assets/download.jpeg" alt="User"></figure>
+      <div class="card card-side bg-base-100 shadow-xl" *ngFor="let i of employeeList | filter: term">
+          <figure><img src="../../../../assets/empty-profile.png" alt="User"></figure>
           <div class="flex justify-end">
               <div class="card-body">
-                  <h4 class="card-title"> {{emps.first_name}} {{emps.last_name}}</h4>
-                  <p>{{emps.email }}</p>
-                  <p>Contacts: {{emps.phone_number }}</p>
-                  <p>Start: {{emps.hiredate | date: 'dd MMM YYYY'}}</p>
-                  <p>End Date: {{emps.enddate | date: 'dd MMM YYYY'}}</p>
-                 
-                  <div class="card-actions ustify-end">
-                    <i class="pi pi-clock"> {{emps.years }} years {{emps.months}} months</i>
+                  <h4 class="card-title"> {{i.first_name }} {{i.last_name }}</h4>
+                  <p>{{i.email }}</p>
+                  <p>Contacts: {{i.phone_number }}</p>
+                  <p>Start: {{i.hiredate | date: 'dd MMM YYYY'}}</p>
+                  <p>End Date: {{i.enddate | date: 'dd MMM YYYY'}}</p>
+                  <div class="card-actions justify-end">
+                    <i class="pi pi-clock"> {{i.years }} years {{i.months}} months</i>
                   </div>
               </div>
           </div>

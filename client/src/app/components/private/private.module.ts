@@ -11,7 +11,7 @@ import { PrivateComponent } from './private.component';
 import { FooterComponent } from './footer/footer.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { OldemployeesComponent } from './oldemployees/oldemployees.component';
-import { EmphistoryComponent } from './emphistory/emphistory.component';
+import { EmphistoryComponent } from './AllEmployees/emphistory.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 //Guards
 import { AuthGuard } from 'src/app/auth-guards/auth.guard';
@@ -41,6 +41,7 @@ const routes: Routes = [
     {path:'employees', component: EmployeesComponent},
     {path:'home', component: DashboardComponent},
     {path:'oldemployees', component: OldemployeesComponent},
+    {path: 'allemployees', component:EmphistoryComponent},
     {path:'', redirectTo:'/dash/home', pathMatch:'full'},
 
   ]},
