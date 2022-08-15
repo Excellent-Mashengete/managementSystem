@@ -26,8 +26,8 @@
                     <p>Start: {{i.hiredate | date: 'dd MMM YYYY'}}</p>
                     <p>Salary: R{{i.salary }}</p>
                     <p>Job Type: {{i.dept_name }}</p>
-                    <div class="card-actions ">
-                        <button pButton pRipple icon="pi pi-eye"  (click)="editProduct(i)" class="p-button-rounded p-button-primary" ></button>
+                    <div class="card-actions justify-end">
+                       <!-- <button pButton pRipple icon="pi pi-eye"  (click)="viewUser(i)" class="p-button-rounded p-button-primary" ></button> -->
                         <button pButton pRipple icon="pi pi-pencil"  (click)="editProduct(i)" class="p-button-rounded p-button-warning" ></button>
                         <button pButton pRipple icon="pi pi-trash" (click)="deleteProduct(i)" class="p-button-rounded p-button-danger" ></button>
                     </div>
@@ -99,6 +99,7 @@
         </ng-template>
 </p-dialog> 
 
+<!--
 <p-dialog [(visible)]="ViewDialog" [style]="{width: '450px'}" header="Employee Details" [modal]="true" styleClass="p-fluid">
 
     <ng-template pTemplate="content">
@@ -108,47 +109,11 @@
             <small class="invalid-feedback" *ngIf="submitted && !empList.first_name">First Name is required.</small>
         </div>
 
-        <div class="field col mb-2">
-            <label class="label"><span class="label-text">Last Name</span></label>
-            <input (keypress)="keyPressAlphanumeric($event)" type="text" placeholder="Last Name" pInputText id="last_name" [(ngModel)]="empList.last_name" class="input input-bordered w-full max-w-s last_name " required autofocus />
-            <small class="invalid-feedback" *ngIf="submitted && !empList.last_name">Last Name is required.</small>
-        </div>
 
-        <div class="field col mb-2">
-            <label class="label"><span class="label-text">Phone Number</span></label>
-            <p-inputMask mask="(999) 999-9999" [(ngModel)]="empList.phone_number" placeholder="(999) 999-9999"></p-inputMask>
-            <small class="invalid-feedback" *ngIf="submitted && !empList.phone_number">Phone Number is required.</small>
-        </div>
-
-
-        <div class="field col mb-2">
-            <label class="label"><span class="label-text">Salary</span></label>
-            <p-inputNumber id="price" [(ngModel)]="empList.salary" placeholder="Salary" mode="currency" currency="ZAR" locale="en-SA"></p-inputNumber>
-            <small class="invalid-feedback" *ngIf="submitted && !empList.salary">Salary is required.</small>
-        </div>
-
-        <div class="field col mb-2">
-            <label class="label"><span class="label-text">Job Type</span></label>
-            <select [(ngModel)]="empList.dept_id" class="input input-bordered w-full max-w-s department " placeholder="Select department">
-            <option value disabled selected hidden>Select Role...</option>
-            <option value="1">Administration</option>
-            <option value="2">Marketing</option>
-            <option value="3">Finance</option>
-            <option value="4">IT Department</option>
-            <option value="5">Human Resource</option>
-            </select>
-            <small class="invalid-feedback" *ngIf="submitted && !empList.dept_id">Job Type is required.</small>
-        </div>
 
     </ng-template>
 
     <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" (click)="hideDialog()" icon="pi pi-times" class="p-button-text" ></button>
-        <button pButton pRipple label="Save" (click)="saveEmployee()" icon="pi pi-check" class="p-button-text" ></button>
-    </ng-template>
-</p-dialog> 
-
-
-
-
- 
+        <button pButton pRipple label="Dismiss" (click)="hideDialog()" icon="pi pi-times" class="p-button-text" ></button>
+       </ng-template>
+</p-dialog> -->

@@ -7,7 +7,7 @@ import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api'; 
 import { EmployeesService } from '../service/employees.service';
 import { Employees } from 'src/app/interfaces/employees';
-import { Update } from 'src/app/models/update.models';
+import { Update, View } from 'src/app/models/update.models';
 import { Router } from '@angular/router';
 import {InputTextModule} from 'primeng/inputtext';
 
@@ -26,6 +26,7 @@ export class EmployeesComponent implements OnInit {
 
   emp: any 
   empList: Update = new Update;
+  empView: View = new View;
   totalNumber: number = 0
   productDialog: boolean = false;
   ViewDialog: boolean = false;
@@ -112,8 +113,6 @@ export class EmployeesComponent implements OnInit {
     this.submitted = false;
   }
 
-  
-
   //Open a modal
   openNew(){
     //pass the datatypes in the modal class to modal
@@ -132,6 +131,12 @@ export class EmployeesComponent implements OnInit {
     this.productDialog = true;
   }
 
+  //view user 
+  viewUser(empView:View){
+    this.empView = {...empView}
+    this.ViewDialog = true;
+  }
+  
   saveEmployee(){
     this.submitted = true;
         
