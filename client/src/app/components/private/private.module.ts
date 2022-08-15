@@ -4,7 +4,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
+//Model for search and pagination
 import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 //Components
 import { PrivateComponent } from './private.component';
@@ -13,6 +16,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { OldemployeesComponent } from './oldemployees/oldemployees.component';
 import { EmphistoryComponent } from './AllEmployees/emphistory.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+
 //Guards
 import { AuthGuard } from 'src/app/auth-guards/auth.guard';
 
@@ -59,6 +63,8 @@ const routes: Routes = [
   ],
   imports: [
     Ng2SearchPipeModule,
+    NgxPaginationModule,
+
      //loader
      NgxLoadingModule.forRoot({
       animationType: ngxLoadingAnimationTypes.wanderingCubes,
@@ -69,6 +75,7 @@ const routes: Routes = [
       tertiaryColour: '#ffffff',
       fullScreenBackdrop: false,
     }),
+    
     FormsModule,
     InputMaskModule,
     ReactiveFormsModule,

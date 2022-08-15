@@ -15,7 +15,6 @@ export class DashboardComponent implements OnInit {
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public loading = false;
 
-
   constructor(
     private dash:DepartmentNamesService
   ) { }

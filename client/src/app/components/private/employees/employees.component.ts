@@ -28,6 +28,7 @@ export class EmployeesComponent implements OnInit {
   empList: Update = new Update;
   totalNumber: number = 0
   productDialog: boolean = false;
+  ViewDialog: boolean = false;
   submitted = false;
   term = '';
   constructor(
@@ -57,9 +58,9 @@ export class EmployeesComponent implements OnInit {
     return this.employees.getEmployees().subscribe({
       next:data =>{
         this.loading = true;
-       this.emp = data
-       this.loading = false;
-       this.getTotal(data.length)
+        this.emp = data
+        this.loading = false;
+        this.getTotal(data.length)
       }
     })
   }
@@ -107,8 +108,11 @@ export class EmployeesComponent implements OnInit {
   //Keeps the modal hidden at all times
   hideDialog() {
     this.productDialog = false;
+    this.ViewDialog = false
     this.submitted = false;
   }
+
+  
 
   //Open a modal
   openNew(){
@@ -118,9 +122,9 @@ export class EmployeesComponent implements OnInit {
     this.productDialog = true;
 
     //Reset form every time you insert data
-
   }
 
+  
   //Edit data from modal
   editProduct(empList: Update) {
     this.empList = {...empList};
@@ -130,29 +134,38 @@ export class EmployeesComponent implements OnInit {
 
   saveEmployee(){
     this.submitted = true;
-    if (this.empList.emp_id){
+        
+    //Validate if the modal is empty do not submit
+    if(!this.empList.first_name && !this.empList.dept_id && 
+      !this.empList.last_name && !this.empList.phone_number && !this.empList.salary ){
+      this.productDialog = true;
+    }
+
+    if (this.empList.emp_id){   
+      
       //pass data that needs to be updated as an object to user variable
       let user = {
-          phone_number: this.empList.phone_number,
-          salary: this.empList.salary,
-          dept_id: this.empList.dept_id   
+        phone_number: this.empList.phone_number,
+        salary: this.empList.salary,
+        dept_id: this.empList.dept_id   
       }
-      //Subscribe to a service that uses a patch to update infor
 
+      //Subscribe to a service that uses a patch to update infor
       this.employees.updateEmpDetails(user, this.empList.emp_id).subscribe({
         next:data =>{
           this.loading = true;
           //Route back to employees this helps in refreshing data
           this.route.navigate(['/dash/employees']);
 
-          //Close dialog modal
-          
+          //Close dialog modal 
           this.productDialog = false;
+          
           //Display a message if successful
           this.loading = false;
           this.messageService.add({severity:'success', summary: 'Success', detail:  'Employee Updated successfully', life: 3000});
         },error: err => {
           this.loading = false;
+          
           //display an error message coming from backend if it failed to update
           this.messageService.add({severity:'error', summary: 'Error', detail:  err.error.message, life: 3000});
         }
@@ -166,26 +179,40 @@ export class EmployeesComponent implements OnInit {
         phone_number: this.empList.phone_number,
         salary: this.empList.salary,
         dept_id:this.empList.dept_id,
+
+        //when this function is called pass 
         status:'Former'
       }
 
       this.employees.addNewEmp(newEmployees).subscribe({
         next:data =>{
+          //turn the loader on 
           this.loading = true;
+            
+          //return back to employees page
           this.route.navigate(['/dash/employees']);
+            
+          //turn off the modal dialog off 
           this.productDialog = false;
+            
+          //show the message if successful
           this.messageService.add({severity:'success', summary: 'Successful', detail: 'Employee Added', life: 3000})
           this.getEmp() 
+
+          //turn the loader off
           this.loading = false;
         },
         error: err => {
           this.loading = false;
+
+          //show the message if unable to add new data
           this.messageService.add({severity:'error', summary: 'Error', detail: err.error.message, life: 3000}) 
         }
-      }) 
+      })
     }
   }
 
+  //Transform letters to lowercase
   transform(value:any): string {
     let first = value.toLowerCase();
     return first; 

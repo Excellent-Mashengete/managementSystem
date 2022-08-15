@@ -14,16 +14,13 @@ export class EmphistoryComponent implements OnInit {
   showingTemplate = false;
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public loading = false;
+
   constructor( private employees:EmployeesService) { }
 
   term = '';
-  current: any = []
-  old:any = []
-  totalOld: number = 0;
-  totalCurrent: number = 0;
-  totSum:number = 0
-  sum: number = 0;
-  empList: Array<any> = [];
+  current: any = [] //create an array 
+  old:any = [];  //create an array 
+  empList: Array<any> = []; //Create a array list of type any, why Size of the ArrayList is not fixed. ArrayList can grow and shrink dynamically.
   status: String = ''
 
   ngOnInit(): void {
