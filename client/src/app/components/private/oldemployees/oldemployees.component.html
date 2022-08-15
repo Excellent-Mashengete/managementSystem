@@ -1,34 +1,39 @@
 
-<div class="overflow-x-auto relative  sm:rounded-lg">
-  <div class="p-5 max-w-21 text-lg font-semibold text-left text-gray-900 ">
+<div class="overflow-x-auto list  sm:rounded-lg">
+  <div class="p-2 max-w-21 text-lg font-semibold text-left text-gray-900 ">
     Past Employee List
-   </div>
+  </div>
       
   <div class="form-control mt-5">    
-    <div class="box">
+    <div class="box ml-2">
       <input type="text"  [(ngModel)]="term" placeholder="Search…" class="input input-bordered max-w-s" />
     </div>
   </div>
 </div>
 
 <div class="container  justify-center" style="margin-top:5vh;">
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6" >
-      <div class="card card-side bg-base-100 shadow-xl" *ngFor="let i of employeeList | filter: term">
-          <figure><img src="../../../../assets/empty-profile.png" alt="User"></figure>
-          <div class="flex justify-end">
-              <div class="card-body">
-                  <h4 class="card-title"> {{i.first_name }} {{i.last_name }}</h4>
-                  <p>{{i.email }}</p>
-                  <p>Contacts: {{i.phone_number }}</p>
-                  <p>Start: {{i.hiredate | date: 'dd MMM YYYY'}}</p>
-                  <p>End Date: {{i.enddate | date: 'dd MMM YYYY'}}</p>
-                  <div class="card-actions justify-end">
-                    <i class="pi pi-clock"> {{i.years }} years {{i.months}} months</i>
-                  </div>
-              </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mb-4" >
+    <div class="card card-side bg-base-100 shadow-xl" *ngFor="let i of employeeList | filter: term">
+      <figure><img src="../../../../assets/empty-profile.png" alt="User"></figure>
+      <div class="flex justify-end">
+        <div class="card-body">
+          <h4 class="card-title"> {{i.first_name }} {{i.last_name }}</h4>
+          <p>{{i.email }}</p>
+          <p>Contacts: {{i.phone_number }}</p>
+          <p>Start: {{i.hiredate | date: 'dd MMM YYYY'}}</p>
+          <p>End Date: {{i.enddate | date: 'dd MMM YYYY'}}</p>
+          <div class="card-actions justify-end">
+            <i class="pi pi-clock"> {{i.years }} years {{i.months}} months</i>
           </div>
+        </div>
       </div>
+    </div>
   </div>
+
+  <div class="bottom-0 mt-5">
+    <app-footer></app-footer>
+  </div>
+
   <ngx-loading
   [show]="loading"
   [config]="{

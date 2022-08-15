@@ -1,13 +1,13 @@
  <p-toast></p-toast>
 <p-confirmDialog [style]="{width: '450px'}" header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 
-<div class="overflow-x-auto relative  sm:rounded-lg">
-    <div class="p-5 max-w-21 text-lg font-semibold text-left text-gray-900 ">
+<div class="overflow-x-auto list sm:rounded-lg">
+    <div class="p-2 max-w-21 text-lg font-semibold text-left text-gray-900 ">
         Current Employee List
      </div>
         
     <div class="form-control mt-5">    
-        <div class="box">
+        <div class="box ml-2">
             <input type="text"  [(ngModel)]="term" placeholder="Search…" class="input input-bordered max-w-s" />
             <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success float-right mr-2" (click)="openNew()"></button>
         </div>
@@ -35,6 +35,11 @@
             </div>
         </div>
     </div>
+
+    <div class="bottom-0 mt-5">
+        <app-footer></app-footer>
+    </div>
+
     <ngx-loading
     [show]="loading"
     [config]="{
@@ -93,8 +98,6 @@
             <button pButton pRipple label="Save" (click)="saveEmployee()" icon="pi pi-check" class="p-button-text" ></button>
         </ng-template>
 </p-dialog> 
-
-
 
 <p-dialog [(visible)]="ViewDialog" [style]="{width: '450px'}" header="Employee Details" [modal]="true" styleClass="p-fluid">
 

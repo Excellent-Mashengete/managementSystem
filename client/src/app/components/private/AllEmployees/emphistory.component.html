@@ -1,12 +1,12 @@
 <div class="container text-gray-900 bg-white dark:text-white dark:bg-gray-800">
     <div class="flex justify-center">
        
-        <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-            <div class="p-5 max-w-21 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+        <div class="overflow-x-auto list relative shadow-md sm:rounded-lg">
+            <div class="p-2 max-w-21 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                 All Employees
             </div>
 
-            <div class="form-control mt-5">
+            <div class="form-control mt-5 ml-2">
                 <div class="box">
                     <input type="text" [(ngModel)]="term" placeholder="Search…" class="input input-bordered max-w-s" />
                </div>
@@ -43,6 +43,10 @@
             </table>
         </div>
     </div>
+    <div class="bottom-0 mt-5">
+        <app-footer></app-footer>
+    </div>
+
     <ngx-loading
     [show]="loading"
     [config]="{
