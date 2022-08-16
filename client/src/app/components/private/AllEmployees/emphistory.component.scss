@@ -30,3 +30,8 @@ img{
 .list{
     margin-top:7vh;
 }
+@media screen and (min-width: 1024px){
+    .list{
+        margin-top:4vh;
+    }
+}

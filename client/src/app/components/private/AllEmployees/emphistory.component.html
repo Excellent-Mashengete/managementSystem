@@ -6,7 +6,7 @@
                 All Employees
             </div>
 
-            <div class="form-control mt-5 ml-2">
+            <div class="form-control  mb-5 ml-2">
                 <div class="box">
                     <input type="text" [(ngModel)]="term" placeholder="Search…" class="input input-bordered max-w-s" />
                </div>
@@ -25,22 +25,58 @@
                 <tbody>
                     <tr *ngFor="let i Of empList | filter: term" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"> 
                         <th class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{i.emp_id}}</th>
+                                    {{i.emp_id}}</th>
                         <td class="py-4 px-6" >{{i.last_name }}  {{i.first_name }}</td>
                         <td class="py-4 px-6">{{i.hiredate | date: 'dd MMM YYYY'}}</td>
                         <td class="py-4 px-6">{{i.dept_name }}</td>
                         <td class="py-4 px-6"><span [class]="'product-badge status-'">{{i.status }}</span></td>
                     </tr>
                 </tbody>
+                
                 <tfoot >
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th  scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             Total: {{empList.length}}  employees.
                         </th>
-
                     </tr>
                 </tfoot>
             </table>
+            <!-- <p-table #dt [value]="empList" [rows]="7"  [paginator]="true" [globalFilterFields]="['name']" responsiveLayout="scroll"
+            [rowHover]="true" dataKey="id"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex p-ai-center p-jc-between">
+                    <h5 class="p-m-0">Manage Products</h5>
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" placeholder="Search..." />
+                    </span>
+                </div>
+            </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="emp_id">Employees ID <p-sortIcon field="emp_id"></p-sortIcon></th>
+                        <th pSortableColumn="first_name">Full Name <p-sortIcon field="first_name"></p-sortIcon></th>
+                        <th pSortableColumn="hiredate">Hire Date <p-sortIcon field="hiredate"></p-sortIcon></th>
+                        <th pSortableColumn="dept_name">Job Type <p-sortIcon field="dept_name"></p-sortIcon></th>
+                        <th pSortableColumn="status">Status<p-sortIcon field="status"></p-sortIcon></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-empList >
+                    <tr>
+                        <td>{{empList.emp_id}}</td>
+                        <td>{{empList.first_name}}  {{empList.last_name}}</td>
+                        <td>{{empList.hiredate | date: 'dd MMM YYYY'}}</td>
+                        <td>{{empList.dept_name}}</td>
+                        <td>{{empList.status}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="flex align-items-center justify-content-between">
+                        In total there are {{empList ? empList.length : 0 }} products.
+                    </div>
+                </ng-template>
+            </p-table> -->
         </div>
     </div>
     <div class="bottom-0 mt-5">
@@ -57,3 +93,35 @@
     </ngx-loading>
 </div>
 
+
+<!-- 
+    <table style="width:100%;" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-5">
+        <thead class="text-xs text-gray-50 uppercase bg-sky-800 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class=" py-3 px-6">Employees ID</th>
+                <th scope="col" class=" py-3 px-6">Full Name</th>
+                <th scope="col" class=" py-3 px-6">Hire Date</th>
+                <th scope="col" class=" py-3 px-6">Job Type</th>
+                <th scope="col" class=" py-3 px-6">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i Of empList | filter: term" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"> 
+                <th class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{i.emp_id}}</th>
+                <td class="py-4 px-6" >{{i.last_name }}  {{i.first_name }}</td>
+                <td class="py-4 px-6">{{i.hiredate | date: 'dd MMM YYYY'}}</td>
+                <td class="py-4 px-6">{{i.dept_name }}</td>
+                <td class="py-4 px-6"><span [class]="'product-badge status-'">{{i.status }}</span></td>
+            </tr>
+        </tbody>
+        
+        <tfoot >
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th  scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Total: {{empList.length}}  employees.
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+-->

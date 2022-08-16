@@ -8,7 +8,7 @@ import { MessageService } from 'primeng/api';
 import { EmployeesService } from '../service/employees.service';
 import { Employees } from 'src/app/interfaces/employees';
 import { Update, View } from 'src/app/models/update.models';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {InputTextModule} from 'primeng/inputtext';
 
 @Component({
@@ -36,7 +36,8 @@ export class EmployeesComponent implements OnInit {
     private messageService: MessageService,  
     private confirmationService: ConfirmationService,
     private employees:EmployeesService,
-    private route:Router) { }
+    private route:Router,
+    private activeroute: ActivatedRoute) { }
   
   //Prevent numbers from being entered on where string is only allowed e.g first_name and last_name
   keyPressAlphanumeric(event: { keyCode: number; preventDefault: () => void; }) {
@@ -91,10 +92,11 @@ export class EmployeesComponent implements OnInit {
         this.employees.moveEmpToOldEmp(user, details).subscribe();
         this.employees.deleteEmpByID(details).subscribe({
            next:data =>{
-             this.route.navigate(['/dash/employees']);
+
+            //  window.location.reload();
            }
         });
-        
+        this.route.navigate(['/dash/employees']);
         this.getEmp();
         this.loading = false;
         this.messageService.add({severity:'success', summary: 'Successful', detail: 'Employee Deleted', life: 3000})
@@ -159,12 +161,15 @@ export class EmployeesComponent implements OnInit {
       this.employees.updateEmpDetails(user, this.empList.emp_id).subscribe({
         next:data =>{
           this.loading = true;
-          //Route back to employees this helps in refreshing data
-          this.route.navigate(['/dash/employees']);
+          
+          //this.route.navigate(['/dash/employees']);
 
           //Close dialog modal 
           this.productDialog = false;
-          
+          //Route back to employees this helps in refreshing data
+          this.route.routeReuseStrategy.shouldReuseRoute = () => false;         
+          this.route.onSameUrlNavigation = 'reload';         
+          this.route.navigate(['/dash/employees'], { relativeTo: this.activeroute });
           //Display a message if successful
           this.loading = false;
           this.messageService.add({severity:'success', summary: 'Success', detail:  'Employee Updated successfully', life: 3000});

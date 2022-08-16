@@ -37,6 +37,8 @@ import { MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CardModule, } from 'primeng/card';
+import { PaginatorModule } from 'primeng/paginator';
+
 
 
 const routes: Routes = [
@@ -84,6 +86,7 @@ const routes: Routes = [
     TableModule,
     CardModule,
     ToastModule,
+    PaginatorModule,
 		DialogModule,
 		DropdownModule,
 		ButtonModule,

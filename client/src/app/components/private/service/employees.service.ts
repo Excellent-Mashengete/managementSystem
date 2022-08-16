@@ -23,11 +23,11 @@ export class EmployeesService {
   }
 
   deleteEmpByID(id : Employees) : Observable<any>{
-    return this.http.delete(`${this.baseUrl}delete/${id.emp_id}`,)
+    return this.http.delete(`${this.baseUrl}delete/${id.emp_id}`)
   }
   
   getOldEmp():Observable<any>{
-    return this.http.get(`${this.baseUrl}oldemplist`)
+    return this.http.get(`${this.baseUrl}oldemplist` )
   }
 
   moveEmpToOldEmp(oldemps:any, id: Employees,) : Observable<any>{
