@@ -8,6 +8,7 @@ var corsOptions = {
   credentials: true
 };// only allow that listerning address to connnect to the database
 
+
 app.use(express.json());  // to support JSON-encoded
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
@@ -32,7 +33,7 @@ client.connect((err) =>{ // Connect to the Database
 const auth = require("./App/Routes/authenticate");
 const emp = require("./App/Routes/employee");
 
-const port = process.env.PORT || 7070;
+const port = process.env.PORT || 7070; //create a listerning port number
 
 app.get("/", (req, res) =>{
     res.status(200).send("Welcome to Excellent server");

@@ -61,4 +61,5 @@ CREATE TABLE oldemployees (
     dept_id int,
     status VARCHAR(20);
     FOREIGN KEY(dept_id) REFERENCES Department(dept_id)
+
 );
