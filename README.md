@@ -22,7 +22,7 @@ You must have installed the following
 
 ### Step 1 : After cloning the project , go to your terminal and run the following commands  
 
-#### server: runs on nodejs(expressjs)  
+#### server: runs on nodejs16
 <ol>
   <li>cd server</li>
   <li>npm install</li>
