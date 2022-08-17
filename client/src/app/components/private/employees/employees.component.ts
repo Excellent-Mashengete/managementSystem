@@ -32,6 +32,7 @@ export class EmployeesComponent implements OnInit {
   ViewDialog: boolean = false;
   submitted = false;
   term = '';
+  disabled: boolean = false;
   constructor(
     private messageService: MessageService,  
     private confirmationService: ConfirmationService,
@@ -182,6 +183,8 @@ export class EmployeesComponent implements OnInit {
       });
     }else{
       //pass data that needs to be data will be inserted in a the database as an object to newEmployees variable
+      this.disabled = true;
+      
       let newEmployees = { 
         first_name: this.empList.first_name,
         last_name: this.empList.last_name,

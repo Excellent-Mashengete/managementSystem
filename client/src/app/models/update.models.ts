@@ -19,3 +19,4 @@ export class View {
     dept_id?:Number;
     status?: string;
 }
+

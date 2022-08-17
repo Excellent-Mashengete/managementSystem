@@ -60,32 +60,32 @@
         <ng-template pTemplate="content">
             <div class="field col mb-2">
                 <label class="label"><span class="label-text">First Name</span></label>
-                <input (keypress)="keyPressAlphanumeric($event)"  placeholder="First Name" type="text" pInputText id="first_name" [(ngModel)]="empList.first_name" class="input input-bordered w-full max-w-s first_name " required autofocus />
+                <input [disabled]="disabled" (keypress)="keyPressAlphanumeric($event)"  placeholder="First Name" type="text" pInputText id="first_name" [(ngModel)]="empList.first_name" class="input input-bordered w-full max-w-s first_name " required autofocus />
                 <small class="invalid-feedback" *ngIf="submitted && !empList.first_name">First Name is required.</small>
             </div>
 
             <div class="field col mb-2">
                 <label class="label"><span class="label-text">Last Name</span></label>
-                <input (keypress)="keyPressAlphanumeric($event)" type="text" placeholder="Last Name" pInputText id="last_name" [(ngModel)]="empList.last_name" class="input input-bordered w-full max-w-s last_name " required autofocus />
+                <input [disabled]="disabled" (keypress)="keyPressAlphanumeric($event)" type="text" placeholder="Last Name" pInputText id="last_name" [(ngModel)]="empList.last_name" class="input input-bordered w-full max-w-s last_name " required autofocus />
                 <small class="invalid-feedback" *ngIf="submitted && !empList.last_name">Last Name is required.</small>
             </div>
 
             <div class="field col mb-2">
                 <label class="label"><span class="label-text">Phone Number</span></label>
-                <p-inputMask mask="(999) 999-9999" [(ngModel)]="empList.phone_number" placeholder="(999) 999-9999"></p-inputMask>
+                <p-inputMask [disabled]="disabled"mask="(999) 999-9999" [(ngModel)]="empList.phone_number" placeholder="(999) 999-9999"></p-inputMask>
                 <small class="invalid-feedback" *ngIf="submitted && !empList.phone_number">Phone Number is required.</small>
             </div>
 
 
             <div class="field col mb-2">
                 <label class="label"><span class="label-text">Salary</span></label>
-                <p-inputNumber id="price" [(ngModel)]="empList.salary" placeholder="Salary" mode="currency" currency="ZAR" locale="en-SA"></p-inputNumber>
+                <p-inputNumber [disabled]="disabled" id="price" [(ngModel)]="empList.salary" placeholder="Salary" mode="currency" currency="ZAR" locale="en-SA"></p-inputNumber>
                 <small class="invalid-feedback" *ngIf="submitted && !empList.salary">Salary is required.</small>
             </div>
 
             <div class="field col mb-2">
                 <label class="label"><span class="label-text">Job Type</span></label>
-                <select [(ngModel)]="empList.dept_id" class="input input-bordered w-full max-w-s department " placeholder="Select department">
+                <select [disabled]="disabled" [(ngModel)]="empList.dept_id" class="input input-bordered w-full max-w-s department " placeholder="Select department">
                 <option value disabled selected hidden>Select Role...</option>
                 <option value="1">Administration</option>
                 <option value="2">Marketing</option>
@@ -103,6 +103,7 @@
             <button pButton pRipple label="Save" (click)="saveEmployee()" icon="pi pi-check" class="p-button-text" ></button>
         </ng-template>
 </p-dialog> 
+
 
 <!--
 <p-dialog [(visible)]="ViewDialog" [style]="{width: '450px'}" header="Employee Details" [modal]="true" styleClass="p-fluid">
