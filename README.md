@@ -1,9 +1,13 @@
 # Employee Record System
 Employee Record System is a platform  created by for keeping records of employees in a company 
 
-backend third-party packages installed using npm i: bcrypt, body-parser, cors, dotenv, express, jsonwebtoken, jwt-decode, nodemailer, rand-token, pg
+## Dependencies
 
-Client third-party packages installed using npm i: DaisyUI, ngx-loading, ng2-search-filter, PrimeNG, PrimeIcons, rxjs, Tailwind
+
+Sever third-party packages installed using npm i: bcrypt, body-parser, cors, dotenv, express, jsonwebtoken, jwt-decode, nodemailer, rand-token, pg
+
+Client third-party packages installed using npm i:  DaisyUI, ngx-loading, ng2-search-filter, PrimeNG, PrimeIcons, rxjs, Tailwind
+    
 
 ## Steps to run application 
 
@@ -20,7 +24,7 @@ You must have installed the following
 
 ### Step 1 : After cloning the project , go to your terminal and run the following commands  
 
-#### Backend(node)
+#### server: runs on nodejs16
 <ol>
   <li>cd server</li>
   <li>npm install</li>
@@ -34,13 +38,14 @@ You must have installed the following
 
 ### Step 2 : go to node terminal session and run the following commands
 
-#### Frontend(angular)
+#### client: runs on angular13
 <ol>
   <li>cd ../client</li>
   <li>npm install</li>
   <li>ng server -o</li>
 </ol>
 
+<strong>N.B Frontend is hoated on netlify</strong>
 
 ## Run docker as follows:
 
