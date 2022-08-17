@@ -10,9 +10,7 @@ ul a {
     text-decoration: none;
     display: inline-block;
 }
-ul li:hover{
-    text-decoration: underline;
-}
+
 .menu{
     color: white;
 }
@@ -21,7 +19,22 @@ ul li:hover{
     overflow: hidden;
     top: 0;
 }
+
 #logo{
-    margin-left: -12px;
+    margin-left: 15px;
+    text-align: left;
+    left:0;
 }
 
+#logo:hover{
+    border: none;
+}
+.menu #logo:hover{
+    text-decoration: none;
+}
+.user{
+    margin-top: 25px;
+}
+.appName{
+    margin-top: 12px;
+}
