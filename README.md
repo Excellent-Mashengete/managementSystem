@@ -1,7 +1,11 @@
 # Employee Record System
 Employee Record System is a platform  created by for keeping records of employees in a company 
 
-backend third-party packages installed using npm i: bcrypt, body-parser, cors, dotenv, express, jsonwebtoken, jwt-decode, nodemailer, rand-token, pg
+## Dependencies
+
+Sever third-party packages installed using npm i: bcrypt, body-parser, cors, dotenv, express, jsonwebtoken, jwt-decode, nodemailer, rand-token, pg
+
+Client third-party packages installed using npm i:  DaisyUI,  PrimeNG, Tailwind
 
 ## Steps to run application 
 
